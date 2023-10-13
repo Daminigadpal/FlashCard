@@ -1,20 +1,17 @@
-import Create from './Pages/Create';
-import MyComponent from './Pages/Mycomponent';
-import './App.css';
+// import Main from './Pages/Main';
 import React from 'react';
-import Myform from './Pages/Create';
-import Button from './Pages/button';
+import Card from './Pages/Card';
+import Navbar from './Pages/Navbar';
+import './App.css';
 
 function App() {
   return (
-    <div>
-      <Create/>
-      {/* <MyComponent/> */}
-      <Myform/>
-      <Button/>
+    <div className='App'>
+      {/* <Main/> */}
+      <Navbar/>
+      <Card/>
     </div>
   );
-}
-
+  }
 export default App;
 
