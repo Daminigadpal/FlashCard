@@ -4,7 +4,7 @@ import { LiaShareSolid } from "react-icons/lia";
 import { FiDownload } from "react-icons/fi";
 import { BsPrinter } from "react-icons/bs";
 
-const Main = () => {
+const FlashcardDetails = () => {
   return (
     <>
       <div className="mx-40 py-48 ">
@@ -65,4 +65,4 @@ const Main = () => {
     </>
   );
 };
-export default Main;
+export default FlashcardDetails;
