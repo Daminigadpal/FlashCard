@@ -7,7 +7,8 @@ import {
   FieldArray,
   setFieldValue,
 } from "formik";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import FlashCardSchema from "../Validations/schema/FlashcardSchema";
 import { nanoid } from "nanoid";
 import {
@@ -20,14 +21,16 @@ import { useDispatch } from "react-redux";
 import { setFlashCard } from "../App/features/flashcardSlice";
 import TextError from "../Validations/customErrorForm/TextError";
 import { useNavigate } from "react-router-dom";
+import dogImg from "../Assets/dog-img.png"
 
 const CreateFlashCard = ({ onSubmit }) => {
   const [DisableCards, setDisableCards] = useState(true);
   const [DisableImage, setDisableImage] = useState(true);
   const dispatch = useDispatch();
   const filePickerRef = useRef(null);
-  const editRef = useRef(null);
+  const editRef = useRef();
   const filePicker = useRef(null);
+
   const [groupImg, setGroupImg] = useState(""); // Import navigate
   // Load the groupname and groupdescription from local storage
   // const navigate = useNavigate();
@@ -62,7 +65,7 @@ const CreateFlashCard = ({ onSubmit }) => {
         groupid: nanoid(),
         groupname: "",
         groupdescription: "",
-        groupimg: null,
+        groupImg: null,
         cards: [
           {
             cardid: nanoid(),
@@ -75,8 +78,10 @@ const CreateFlashCard = ({ onSubmit }) => {
       }}
       validationSchema={FlashCardSchema}
       onSubmit={(values, { resetForm }) => {
+       
         onSubmit(values); // Pass the values to the parent component
         resetForm(); // Clear the form
+        toast.success('👍📤🗃Flashcard Created !')
         localStorage.setItem("formData", JSON.stringify(values));
       }}
     >
@@ -89,7 +94,7 @@ const CreateFlashCard = ({ onSubmit }) => {
               <div className="flex flex-col ">
                 <label
                   htmlFor="createGroup"
-                  className="text-gray-600 py-2 mt-2"
+                  className="text-gray-600  py-2 mt-2"
                 >
                   Create Group <span className="text-red-700">*</span>
                 </label>
@@ -98,7 +103,7 @@ const CreateFlashCard = ({ onSubmit }) => {
                   name="groupname"
                   id="createGroup"
                   placeholder="Enter Group Name"
-                  className="border-gray-300 md:w-96 border-2 rounded-md p-2 bg-gray-50"
+                  className="border-gray-300 md:w-96 font-medium border-[1px] rounded-md p-2 bg-gray-50"
                   onBlur={(e) => {
                     // Enable the carddescription field when group description is filled
                     if (e.target.value) {
@@ -117,13 +122,13 @@ const CreateFlashCard = ({ onSubmit }) => {
                   <img
                     src={groupImg}
                     alt="groupImg"
-                    className="w-24 object-contain"
+                    className="h-20 rounded-lg border-[1px] shadow-md object-contain"
                   />
                 ) : (
                   <button
                     type="button"
                     onClick={() => filePicker.current.click()}
-                    className={`md:flex items-center px-5 py-2 mt-6 border-2 border-slate-300 active:border-blue-600 text-blue-700 font-semibold rounded-md space-x-2`}
+                    className={`md:flex items-center px-5 py-2 mt-6 border-[1px] border-slate-300 active:border-blue-600 text-blue-700 font-semibold rounded-md space-x-2`}
                   >
                     <input
                       type="file"
@@ -161,7 +166,7 @@ const CreateFlashCard = ({ onSubmit }) => {
                 name="groupdescription"
                 id="addDescription"
                 placeholder="Write your description here (max length is 500 words)"
-                className="border-2 2xl:h-40 border-gray-200 md:h-20 bg-gray-50 rounded-md p-3 resize-none"
+                className="border-[1px] 2xl:h-40 border-gray-200 md:h-20 bg-gray-50 rounded-md p-3 resize-none"
                 maxLength="500"
                 spellCheck="false"
               />
@@ -172,148 +177,154 @@ const CreateFlashCard = ({ onSubmit }) => {
           {/* card  */}
 
           <div
-            className={` text-black drop-shadow-lg pt-8 bg-white border shadow-lg rounded-lg p-10 mt-11 ${
+            className={` text-black drop-shadow-lg pt-8 bg-white border shadow-lg rounded-lg p-10 mt-5 ${
               DisableCards ? "pointer-events-none, opacity-50" : ""
             }`}
           >
             <FieldArray name="cards">
-              {(arrayHelper) => (
-                <div className="   flex flex-col w-full ">
-                  {values.cards.map((card, index) => (
-                    <div key={index} className="flex gap-7 pr-4 pb-4">
-                      {/* Enter term */}
-                      <div className="">
-                        <label
-                          htmlFor={`cards.${index}.cardname`}
-                          className=" text-gray-600 text-base block"
-                        >
-                          Enter Term <span className="text-red-600">*</span>
-                        </label>
-                        <Field
-                          type="text"
-                          id={`cards.${index}.cardname`}
-                          innerRef={editRef}
-                          name={`cards.${index}.cardname`}
-                          className="border-gray-200 mt-1 border-2 p-2 w-96 rounded-lg bg-gray-50"
-                          placeholder="javascript"
-                          disabled={DisableCards}
-                        />
-                        <ErrorMessage
-                          component={TextError}
-                          name={`cards.${index}.cardname`}
-                        />
-                      </div>
-
-                      {/* Enter Description  */}
-                      <div>
-                        <label
-                          htmlFor={`cards.${index}.carddescription`}
-                          className="text-gray-600 text-base block"
-                        >
-                          Enter Description{" "}
-                          <span className="text-red-600">*</span>
-                        </label>
-                        <Field
-                          as="textarea"
-                          id={`cards.${index}.carddescription`}
-                          name={`cards.${index}.carddescription`}
-                          className="border-gray-200 mt-1 border-2 p-2 h-11 w-[420px] rounded-lg bg-slate-50 resize-none"
-                          placeholder="This is description"
-                          disabled={DisableCards}
-                        />
-                        <ErrorMessage
-                          component={TextError}
-                          name={`cards.${index}.carddescription`}
-                        />
-                      </div>
-
-                      {/* Upload card image  */}
-                      <div className="flex items-center">
-                        {card.cardImage ? (
-                          <div className="flex items-center">
-                            <img
-                              src={card.cardImage}
-                              alt="cardimg"
-                              className="w-32 object-contain "
-                            />
-                            <div className=" space-x-2 ml-4">
-                              <button
-                                type="button"
-                                onClick={() => {
-                                  editRef.current.focus();
-                                }}
-                                className=" text-white p-2  rounded-md  px-3 bg-blue-500 hover:text-blue-700  "
+              {(arrayHelper) => {
+                const cards = values.cards;
+                return (
+                  <div className="   flex flex-col w-full ">
+                    {cards && cards.length > 0
+                      ? (cards.map((card, index) => (
+                          <div key={index} className="flex gap-4 pr-4 pb-4">
+                            <div className="w-2 h-2 px-3 py-3 flex items-center justify-center bg-red-600 text-white text-md font-semibold rounded-full">
+                              {index + 1}
+                            </div>
+                            {/* Enter term */}
+                            <div className="">
+                              <label
+                                htmlFor={`cards.${index}.cardname`}
+                                className=" text-gray-600 text-base block"
                               >
-                                <AiOutlineEdit />
-                              </button>
+                                Enter Term{" "}
+                                <span className="text-red-600">*</span>
+                              </label>
+                              <Field
+                                type="text"
+                                id={`cards.${index}.cardname`}
+                                innerRef={editRef}
+                                name={`cards.${index}.cardname`}
+                                className="border-gray-200 mt-1 border-[1px] p-2 md:w-80 2xl:w-96 rounded-lg bg-gray-50"
+                                placeholder="javascript"
+                                disabled={DisableCards}
+                              />
+                              <ErrorMessage
+                                component={TextError}
+                                name={`cards.${index}.cardname`}
+                              />
+                            </div>
 
-                              {values.cards.length <= 1 ?null :  (
+                            {/* Enter Description  */}
+                            <div>
+                              <label
+                                htmlFor={`cards.${index}.carddescription`}
+                                className="text-gray-600 text-base block"
+                              >
+                                Enter Description{" "}
+                                <span className="text-red-600">*</span>
+                              </label>
+                              <Field
+                                as="textarea"
+                                id={`cards.${index}.carddescription`}
+                                name={`cards.${index}.carddescription`}
+                                className="border-gray-200 mt-1 border-[1px] p-2 h-11 md:w-[350px] 2xl:w-[420px] rounded-lg bg-slate-50 resize-none"
+                                placeholder="This is description"
+                                disabled={DisableCards}
+                              />
+                              <ErrorMessage
+                                component={TextError}
+                                name={`cards.${index}.carddescription`}
+                              />
+                            </div>
+
+                            {/* Upload card image  */}
+                            <div className="flex items-center">
+                              {card.cardImage ? (
+                                <div className="flex ">
+                                  <img
+                                    src={card.cardImage}
+                                    alt="cardimg"
+                                    className="h-20 shadow-md mt-7 border-[1px] object-contain rounded-lg"
+                                  />
+                                  <div className="  ml-9 space-y-3 mt-9">
+                                    <button
+                                      type="button"
+                                      onClick={() => {
+                                        editRef.current.focus();
+                                      }}
+                                      className=" text-blue-500 block text-lg font-extrabold p-1"
+                                    >
+                                      <AiOutlineEdit />
+                                    </button>
+
+                                    <button
+                                      className=" text-red-500  text-lg  p-1"
+                                      onClick={() =>
+                                        arrayHelper.remove(index<=1)
+                                      }
+                                    >
+                                      <AiOutlineDelete />
+                                    </button>
+                                  </div>
+                                </div>
+                              ) : (
                                 <button
-                                  className="bg-red-500 px-3 text-white p-2 rounded-md hover:text-red-500"
-                                  onClick={() => arrayHelper.remove(index <= 1)}
+                                type="button"
+                                  className=" md:flex items-center px-10 py-2 mt-5 border-[1px] border-blue-500 active:border-blue-600 text-blue-600 
+                            drop-shadow-lg font-semibold rounded-md"
+                            onClick={() =>filePickerRef.current.click()}
+                                  disabled={DisableImage}
                                 >
-                                  <AiOutlineDelete />
+                                  <input
+                                    type="file"
+                                    ref={filePickerRef}
+                                    value={card.cardImage}
+                                    onChange={(e) => {
+                                      const file = e.target.files[0];
+                                      const reader = new FileReader();
+                                      reader.readAsDataURL(file);
+
+                                      reader.onload = () => {
+                                        setFieldValue(
+                                          `cards.${index}.cardImage`,
+                                          reader.result
+                                        );
+                                      };
+                                    }}
+                                    hidden
+                                  />
+                                  <span>Select Image</span>
                                 </button>
                               )}
                             </div>
                           </div>
-                        ) : (
-                          <button
-                            className="md:flex items-center px-5 py-2 mt-5 border-2 border-slate-200 active:border-blue-600 text-blue-700 font-semibold rounded-md  space-x-2"
-                            onClick={() => {
-                              if (!DisableImage) {
-                                filePickerRef.current.click();
-                              }
-                            }}
-                            disabled={DisableImage}
-                          >
-                            <input
-                              type="file"
-                              ref={filePickerRef}
-                              value={card.cardImage}
-                              onChange={(e) => {
-                                const file = e.target.files[0];
-                                const reader = new FileReader();
-                                reader.readAsDataURL(file);
+                        ))
+                ): null}
 
-                                reader.onload = () => {
-                                  arrayHelper.replace(index, {
-                                    ...card,
-                                    cardImage: reader.result,
-                                  });
-                                };
-                              }}
-                              hidden
-                            />
-                            <AiOutlineUpload className="w-5 h-5" />
-                            <span>Upload Image</span>
-                          </button>
-                        )}
-                      </div>
+                    {/* add more button  */}
+                    <div className=" py-2">
+                      <button
+                        type="button"
+                        onClick={() =>
+                          arrayHelper.push({
+                            cardid: nanoid(),
+                            cardname: "",
+                            carddescription: "",
+                            cardImage: null,
+                          })
+                        }
+                        className="flex items-center space-x-2 text-blue-900 text-md mt-0"
+                        disabled={DisableCards}
+                      >
+                        <AiOutlinePlus />
+                        <span>Add More</span>
+                      </button>
                     </div>
-                  ))}
-
-                   {/* add more button  */}
-                  <div className=" py-2">
-                    <button
-                      type="button"
-                      onClick={() =>
-                        arrayHelper.push({
-                          cardid: nanoid(),
-                          cardname: "",
-                          carddescription: "",
-                          cardImage: null,
-                        })
-                      }
-                      className="flex items-center space-x-2 text-blue-900 text-md mt-0"
-                      disabled={DisableCards}
-                    >
-                      <AiOutlinePlus />
-                      <span>Add More</span>
-                    </button>
                   </div>
-                </div>
-              )}
+                );
+              }}
             </FieldArray>
           </div>
 
@@ -321,7 +332,7 @@ const CreateFlashCard = ({ onSubmit }) => {
             <button
               disabled={isSubmitting}
               type="submit"
-              className="py-2 px-14 border-2  border-red-500 hover:bg-red-500 shadow-md text-red-500 hover:text-white rounded-md"
+              className="py-2 px-14 border-[1px]  border-red-500 hover:bg-red-500 shadow-md text-red-500 hover:text-white rounded-md"
             >
               Create
             </button>

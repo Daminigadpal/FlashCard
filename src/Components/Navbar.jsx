@@ -7,7 +7,7 @@ const Navbar = () => {
       <h1 className="text-2xl text-black font-semibold mb-4  pt-4 pb-2">
         Create Flashcard
       </h1>
-      <div className="flex font-medium space-x-12 pb-3 px-2">
+      <div className="flex font-medium md:text-sm space-x-12 pb-3 px-2">
         <button className=" ">
           <NavLink
             to={"/"} 
@@ -36,7 +36,7 @@ const Navbar = () => {
           </NavLink>
         </button>
       </div>
-      <hr className="border border-gray-300 mb-8" />
+      <hr className="border border-gray-300 md:mb-5 mb-8" />
     </div>
   );
 };

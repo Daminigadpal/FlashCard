@@ -10,21 +10,31 @@ import { useState } from "react";
 
 function App() {
   const [userData, setUserData]=useState([]);
+
   const handleFormSubmit = (values) =>{
     setUserData([...userData,values]);
-  }
+  };
+
+  const handleRemoveUser = (index) => {
+    const updatedUserData = [...userData];
+    updatedUserData.splice(index, 1);
+    setUserData(updatedUserData);
+  };
 
 
 
    return (
     <BrowserRouter>
+    <div>
     <Header/>
       <Navbar/>
       <Routes>
-        <Route path="/" element={<CreateFlashcard onSubmit={handleFormSubmit} />}/>
-        <Route path="/myflashcard" element={<MyFlashcard userData= {userData}/>}/>
-        <Route path="/flashcarddetails/:id" element={<FlashcardDetails userData= {userData}/>}/>
+        <Route path="/" element={<CreateFlashcard onSubmit={ handleFormSubmit} />}></Route>
+        <Route path="/myflashcard" element={<MyFlashcard userData= {userData} onRemove={handleRemoveUser}/>}></Route>
+        <Route path="/flashcarddetails/:id" element={<FlashcardDetails userData= {userData}/>}></Route>
       </Routes>
+
+      </div>
     </BrowserRouter>
    );
    

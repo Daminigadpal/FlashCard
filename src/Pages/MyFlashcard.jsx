@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import notImg from "../Assets/not-img.png"
 import { useLocation } from "react-router-dom";
 import wolfImg from "../Assets/wolf-img.jpg";
 import dogImg from "../Assets/dog-img.png";
@@ -16,126 +17,92 @@ const truncateText = (text, maxLength) => {
 };
 
 
-const MyFlashcard = ({userData,onRemove}) => {
+const MyFlashcard = ({userData, onRemove }) => {
   // const location = useLocation();
   // const flashcardData = location.state && location.state.flashcardData;
 
 
   return (
-    <>{userData ? (
-      
-      <div className=" mx-40 mb-6 grid grid-cols-3 gap-6">
-          {/* 1 up card */}
-          
-            <div className=" col-span-1  bg-white drop-shadow-lg border-[1px] rounded-md border-gray-300">
+    <>
+    {userData.length !== 0 ? (
+    <div className=" mx-40 mb-6 grid grid-cols-3 gap-9">
+      {/* 1 up card */}
+      {userData.map((user, index) => (
+
+                  
+       
             
-            {/* {userData && userData.length > 0 && (
-              <div>
-              {userData.map((user, index) => (
-                <div >
-                  {user.card.cardImage && (
-                    <img className="object-cover rounded-tl-md rounded-tr-md brightness-[90%] w-full  h-24 " src={card.cardImage} alt="banner" />
-                  )}
-                </div>
-              ))}
-              </div>
-              )} */}
               
-              {userData.map((user, index) => ( 
-              <div key={index} className="pb-5  px-4  justify-center rounded-bl-md rounded-br-md">
-                {/* group image */}
-                <div>
-                  
-                    <img
-                      className=" border-[3px] border-white relative m-auto -top-8 rounded-full w-[75px]"
-                      src={user.groupimg}
-                      alt="profile_img"
-                    />
-                  
+        <div key={index} className="">      
 
-                </div>
-               
-                <div>
-                 {/* group name */}
-
-                    <div>
-                      <h1 className=" text-center -mt-6 text-black font-bold ">
-                    {user.groupname}
-                      </h1>
-                    </div>
-                 
-                  {/* group description  */}
-                  
-                    <div>
-                      <p className=" my-3 m text-center text-sm font-medium ">{truncateText
-                        (user.groupdescription, MAX_CHARACTERS)}
-                      </p>
-                    </div>
-                
-                  {/* number of cards  */}
-                  <div>
-                    <p className="text-center text-gray-500 font-medium text-sm">
-                      {user.cards.length} Cards
-                    </p>
-                  </div>
-                  {/* view card button  */}
-                  <div className="flex">
-                    <link to = {`/flashcarddetails/${index}`}>
-                    <button className="mt-4 mx-auto border-2 rounded-[4px] w-48 py-1 hover:bg-red-500 hover:text-white hover:shadow-rose-300 shadow-lg border-red-500 text-red-600 font-medium ">
-                      View Cards
-                    </button>
-                    </link>
-                    <button onClick={()=> onRemove(index)} className="mt-4 mx-auto border-2 rounded-[4px] w-48 py-1 hover:bg-red-500 hover:text-white hover:shadow-rose-300 shadow-lg border-red-500 text-red-600 font-medium ">
-                      Remove
-                    </button>
-                  </div>
-
-                </div>
-              </div>
-              ))}
+        <img className="object-cover rounded-tl-md banner border-[1px] rounded-tr-md brightness-[100%] w-full  h-24 " src={user.cards[0].cardImage}  alt="banner" />
+                    
+        <div className=" col-span-1  bg-white drop-shadow-lg border-[1px]  border-gray-300 pb-5  px-4  justify-center rounded-bl-md rounded-br-md">
+            {/* group image */}
+            <div>
+              <img
+                className=" border-[3px] border-white relative m-auto -top-8 rounded-full w-[75px] h-[75px]"
+                src={user.groupimg}
+                alt="profile_img"
+              />
             </div>
-          </div>
-        
-      
-    ) : (
-     <p>create card first</p>
-      /* Your rendering logic */
 
-       /* <>
-          <div className=" mx-40 pb-48 grid grid-cols-3  gap-6">
-            <div className="px-6 py-6 pb-5 bg-white drop-shadow-lg  border-[1px] border-gray-300 rounded-md justify-center">
-              <div className="grid grid-cols-4 ">
-                <div>
-                  <img
-                    className="col-start-1 col-span-1  rounded-full w-14"
-                    src={wolfImg}
-                    alt="profile_img"
-                  />
-                </div>
-                <div className="my-auto mx-2 col-span-3 col-end-5 ">
-                  <h1 className="  text-black font-bold ">Web 3</h1>
-                  <h6 className=" text-gray-500 font-medium text-xs">6 Cards</h6>
-                </div>
-              </div>
+            <div>
+              {/* group name */}
+
               <div>
-                <p className=" my-5 text-sm font-medium ">
-                  Lorem Ipsum is simply dummy text of the printing and typesetting
-                  industry.
+                <h1 className=" text-center -mt-6 text-black font-bold ">
+                  {user.groupname}
+                </h1>
+              </div>
+
+              {/* group description  */}
+
+              <div className="mx-6 ">
+                <h1 className=" my-3 break-all text-center text-sm font-medium ">
+                  {truncateText(user.groupdescription, MAX_CHARACTERS)}
+                </h1>
+              </div>
+
+              {/* number of cards  */}
+              <div>
+                <p className="text-center text-gray-500 font-medium text-sm">
+                  {user.cards.length} Cards
                 </p>
               </div>
-              <div className="">
-                <button className="my-1  mx-auto  hover:bg-neutral-50 text-red-600 font-medium ">
-                  View Cards
+              {/* view card button  */}
+              <div className="flex space-x-11 justify-center ">
+                <Link to={`/flashcarddetails/${index}`}>
+                  <button className="mt-4 border-2 rounded-[4px] py-[1px] w-24 hover:bg-red-500 hover:text-white hover:shadow-rose-300 shadow-lg  border-red-200 hover:border-red-500 text-red-500 font-medium ">
+                     Details
+                  </button>
+                </Link>
+
+                <button
+                  onClick={() => onRemove(index)}
+                  className="mt-4 border-2 rounded-[4px] w-24 py-[2px] hover:bg-red-500 hover:text-white hover:shadow-rose-300 shadow-lg border-red-200 hover:border-red-500 text-red-500 font-medium "
+                >
+                  Remove
                 </button>
               </div>
             </div>
-
           </div>
-        </> */
+        </div>
+      ))}
+    </div>
+    ): (
 
-      )}
-    </>
-      );
+      <div className="text-center">
+          <img src={notImg} alt="not found" className="mx-auto h-48"/>
+          <h1 className="text-xl mb-4 font-semibold">Flashcard not available</h1>
+          <p className="text-gray-500 mb-4" >Sorry about that, Please create Flashcard</p>
+          <Link to={`/`}> {" "}
+            <button className="px-7 py-2 border-[1px] border-red-500   text-red-500 hover:bg-red-500 hover:text-white font-medium rounded-lg shadow-md"> Create Flashcard</button>
+          </Link>
+        </div>
+    ) }
+</>
+  );
     };
 
       export default MyFlashcard;
