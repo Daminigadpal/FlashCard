@@ -7,7 +7,7 @@ const Navbar = () => {
       <h1 className="text-2xl text-black font-semibold mb-4  pt-4 pb-2">
         Create Flashcard
       </h1>
-      <div className="flex font-medium md:text-sm space-x-12 pb-3 px-2">
+      <div className="flex font-medium  space-x-12 pb-3 px-2">
         <button className=" ">
           <NavLink
             to={"/"} 
@@ -15,7 +15,7 @@ const Navbar = () => {
             style={({ isActive }) => ({
               borderBottom: isActive ? "4px solid red " : undefined,
               paddingBottom: "12px",
-              color:isActive? "red" : "black",
+              color:isActive? "red" : "GrayText",
               
             })}
           >
@@ -24,12 +24,12 @@ const Navbar = () => {
         </button>
         <button className="">
           <NavLink
-            to={"/myflashcard"}
+            to={"/myflashcard "}
             /*if the link is actve it will give bottom background to my Flashcard of red color */
             style={({ isActive }) => ({
               borderBottom: isActive ? "4px solid red" : undefined,
               paddingBottom: "12px",
-              color:isActive? "red" : "black"
+              color:isActive? "red" : "GrayText"
             })}
           >
             My Flashcard

@@ -7,7 +7,8 @@ import dogImg from "../Assets/dog-img.png";
 import Capture from "../Assets/capture.png"
 
 
-const MAX_CHARACTERS = 40;
+
+const MAX_CHARACTERS = 70;
 
 const truncateText = (text, maxLength) => {
   if (text.length > maxLength) {
@@ -17,7 +18,9 @@ const truncateText = (text, maxLength) => {
 };
 
 
-const MyFlashcard = ({userData, onRemove }) => {
+const MyFlashcard = ({userData =[], onRemove }) => {
+
+  console.log(userData.map); // Debug line
   // const location = useLocation();
   // const flashcardData = location.state && location.state.flashcardData;
 
@@ -27,22 +30,22 @@ const MyFlashcard = ({userData, onRemove }) => {
     {userData.length !== 0 ? (
     <div className=" mx-40 mb-6 grid grid-cols-3 gap-9">
       {/* 1 up card */}
-      {userData.map((user, index) => (
+      {userData ((user, index) => (
 
                   
        
             
               
-        <div key={index} className="">      
+        <div key={index} className="round-[1px]">      
 
-        <img className="object-cover rounded-tl-md banner border-[1px] rounded-tr-md brightness-[100%] w-full  h-24 " src={user.cards[0].cardImage}  alt="banner" />
+        <img className="object-cover rounded-tl-md banner rounded-tr-md brightness-[100%] w-full  h-24 " src={user.cards[0].cardImage}  alt="banner" />
                     
-        <div className=" col-span-1  bg-white drop-shadow-lg border-[1px]  border-gray-300 pb-5  px-4  justify-center rounded-bl-md rounded-br-md">
+        <div className=" col-span-1  bg-white drop-shadow-lg border-gray-300 pb-5  px-4  justify-center rounded-bl-md rounded-br-md">
             {/* group image */}
             <div>
               <img
-                className=" border-[3px] border-white relative m-auto -top-8 rounded-full w-[75px] h-[75px]"
-                src={user.groupimg}
+                className=" border-[3px] object-cover border-white relative m-auto -top-8 rounded-full w-[75px] h-[75px]"
+                src={user.groupImg}
                 alt="profile_img"
               />
             </div>
@@ -51,7 +54,7 @@ const MyFlashcard = ({userData, onRemove }) => {
               {/* group name */}
 
               <div>
-                <h1 className=" text-center -mt-6 text-black font-bold ">
+                <h1 className=" text-center -mt-6 text-black font-bold letter tracking-wider">
                   {user.groupname}
                 </h1>
               </div>
@@ -59,7 +62,7 @@ const MyFlashcard = ({userData, onRemove }) => {
               {/* group description  */}
 
               <div className="mx-6 ">
-                <h1 className=" my-3 break-all text-center text-sm font-medium ">
+                <h1 className=" my-3 text-center text-sm font-medium ">
                   {truncateText(user.groupdescription, MAX_CHARACTERS)}
                 </h1>
               </div>
@@ -97,7 +100,7 @@ const MyFlashcard = ({userData, onRemove }) => {
           <h1 className="text-xl mb-4 font-semibold">Flashcard not available</h1>
           <p className="text-gray-500 mb-4" >Sorry about that, Please create Flashcard</p>
           <Link to={`/`}> {" "}
-            <button className="px-7 py-2 border-[1px] border-red-500   text-red-500 hover:bg-red-500 hover:text-white font-medium rounded-lg shadow-md"> Create Flashcard</button>
+            <button type="button" className="px-7 py-2 border-[1px] border-red-500   text-red-500 hover:bg-red-500 hover:text-white font-medium rounded-lg shadow-md"><span>Create Flashcard</span> </button>
           </Link>
         </div>
     ) }

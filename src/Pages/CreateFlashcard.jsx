@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
+import { toast } from 'react-toastify';
 import {
   Formik,
   Form,
@@ -7,8 +8,6 @@ import {
   FieldArray,
   setFieldValue,
 } from "formik";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import FlashCardSchema from "../Validations/schema/FlashcardSchema";
 import { nanoid } from "nanoid";
 import {
@@ -16,12 +15,14 @@ import {
   AiOutlineUpload,
   AiOutlineEdit,
   AiOutlineDelete,
+  AiFillFileImage,
 } from "react-icons/ai";
 import { useDispatch } from "react-redux";
 import { setFlashCard } from "../App/features/flashcardSlice";
 import TextError from "../Validations/customErrorForm/TextError";
 import { useNavigate } from "react-router-dom";
 import dogImg from "../Assets/dog-img.png"
+const LOCAL_STORAGE_KEY = "my-form";
 
 const CreateFlashCard = ({ onSubmit }) => {
   const [DisableCards, setDisableCards] = useState(true);
@@ -30,8 +31,18 @@ const CreateFlashCard = ({ onSubmit }) => {
   const filePickerRef = useRef(null);
   const editRef = useRef();
   const filePicker = useRef(null);
+  // This function will save the form values to local storage
+  const saveForm = (values) => {
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(values));
+  };
 
-  const [groupImg, setGroupImg] = useState(""); // Import navigate
+  // This function will load the form values from local storage
+  const loadForm = () => {
+    const savedValues = localStorage.getItem(LOCAL_STORAGE_KEY);
+    return savedValues ? JSON.parse(savedValues) : {};
+  };
+
+  // const [groupImg, setGroupImg] = useState(""); // Import navigate
   // Load the groupname and groupdescription from local storage
   // const navigate = useNavigate();
   // useEffect(() => {
@@ -66,6 +77,7 @@ const CreateFlashCard = ({ onSubmit }) => {
         groupname: "",
         groupdescription: "",
         groupImg: null,
+        Profile: null,
         cards: [
           {
             cardid: nanoid(),
@@ -78,11 +90,14 @@ const CreateFlashCard = ({ onSubmit }) => {
       }}
       validationSchema={FlashCardSchema}
       onSubmit={(values, { resetForm }) => {
-       
         onSubmit(values); // Pass the values to the parent component
         resetForm(); // Clear the form
-        toast.success('👍📤🗃Flashcard Created !')
-        localStorage.setItem("formData", JSON.stringify(values));
+        toast.success("👍 Flashcard Created !", {
+          position: "top-center",
+          autoClose: 4000, // 3 seconds
+          hideProgressBar: false,
+        });
+        // saveForm(values);
       }}
     >
       {({ values, isSubmitting, setFieldValue }) => (
@@ -117,40 +132,43 @@ const CreateFlashCard = ({ onSubmit }) => {
                 />
                 <ErrorMessage component={TextError} name="groupname" />
               </div>
-              <div className=" ">
-                {groupImg ? (
-                  <img
-                    src={groupImg}
-                    alt="groupImg"
-                    className="h-20 rounded-lg border-[1px] shadow-md object-contain"
-                  />
-                ) : (
+              
+              
+              <div className="">
+               
                   <button
                     type="button"
                     onClick={() => filePicker.current.click()}
-                    className={`md:flex items-center px-5 py-2 mt-6 border-[1px] border-slate-300 active:border-blue-600 text-blue-700 font-semibold rounded-md space-x-2`}
+                    className="md:flex items-center px-5 py-2 mt-6 border-[1px] border-slate-300 text-blue-700 font-semibold rounded-md space-x-2 shadow-md"
                   >
                     <input
                       type="file"
                       ref={filePicker}
-                      value={groupImg}
+                      name="groupImg"
+                      accept="image/*"
                       onChange={(e) => {
                         const file = e.target.files[0];
                         const reader = new FileReader();
                         reader.readAsDataURL(file);
 
                         reader.onload = () => {
-                          setFieldValue("groupimg", reader.result);
-                          setGroupImg(reader.result);
+                          setFieldValue(`groupImg`, reader.result);
                         };
                       }}
                       hidden
                     />
                     <AiOutlineUpload className="w-5 h-5" />
-                    <span>Upload Image</span>
+                    {values.groupImg ? <span>Change Image</span> :<span>Upload Image</span>}
                   </button>
-                )}
-              </div>
+                  
+               
+
+                
+              </div> {values.groupImg && (                 
+               <img
+                    src={values.groupImg}
+                    alt="groupImg"
+                    className="h-20 rounded-lg border-[1px] shadow-md object-contain z-10 relative top-9"/>)}
             </div>
 
             {/* Add Description */}
@@ -187,8 +205,8 @@ const CreateFlashCard = ({ onSubmit }) => {
                 return (
                   <div className="   flex flex-col w-full ">
                     {cards && cards.length > 0
-                      ? (cards.map((card, index) => (
-                          <div key={index} className="flex gap-4 pr-4 pb-4">
+                      ? cards.map((card, index) => (
+                          <div key={index} className="flex gap-6 pr-4 pb-4">
                             <div className="w-2 h-2 px-3 py-3 flex items-center justify-center bg-red-600 text-white text-md font-semibold rounded-full">
                               {index + 1}
                             </div>
@@ -206,7 +224,7 @@ const CreateFlashCard = ({ onSubmit }) => {
                                 id={`cards.${index}.cardname`}
                                 innerRef={editRef}
                                 name={`cards.${index}.cardname`}
-                                className="border-gray-200 mt-1 border-[1px] p-2 md:w-80 2xl:w-96 rounded-lg bg-gray-50"
+                                className="border-gray-200 mt-1 border-[1px] p-2 md:w-72 2xl:w-96 rounded-lg bg-gray-50"
                                 placeholder="javascript"
                                 disabled={DisableCards}
                               />
@@ -260,10 +278,9 @@ const CreateFlashCard = ({ onSubmit }) => {
                                     </button>
 
                                     <button
+                                      type="button"
                                       className=" text-red-500  text-lg  p-1"
-                                      onClick={() =>
-                                        arrayHelper.remove(index<=1)
-                                      }
+                                      onClick={() => arrayHelper.remove(index)}
                                     >
                                       <AiOutlineDelete />
                                     </button>
@@ -271,10 +288,10 @@ const CreateFlashCard = ({ onSubmit }) => {
                                 </div>
                               ) : (
                                 <button
-                                type="button"
-                                  className=" md:flex items-center px-10 py-2 mt-5 border-[1px] border-blue-500 active:border-blue-600 text-blue-600 
+                                  type="button"
+                                  className=" md:flex items-center px-10 py-2 mt-5 border-[1px] border-blue-500 text-blue-600 
                             drop-shadow-lg font-semibold rounded-md"
-                            onClick={() =>filePickerRef.current.click()}
+                                  onClick={() => filePickerRef.current.click()}
                                   disabled={DisableImage}
                                 >
                                   <input
@@ -301,7 +318,7 @@ const CreateFlashCard = ({ onSubmit }) => {
                             </div>
                           </div>
                         ))
-                ): null}
+                      : null}
 
                     {/* add more button  */}
                     <div className=" py-2">
@@ -315,7 +332,7 @@ const CreateFlashCard = ({ onSubmit }) => {
                             cardImage: null,
                           })
                         }
-                        className="flex items-center space-x-2 text-blue-900 text-md mt-0"
+                        className="flex items-center space-x-2 text-blue-600 text-md mt-0"
                         disabled={DisableCards}
                       >
                         <AiOutlinePlus />
