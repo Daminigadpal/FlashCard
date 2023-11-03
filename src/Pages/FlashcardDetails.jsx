@@ -1,6 +1,7 @@
 import React, {useState} from "react";
-import { LiaShareSolid } from "react-icons/lia";
-import {LuChevronLeft, LuChevronRight} from "react-icons/lu";
+import { LiaShareSolid } from "react-icons/lia/sharesolid";
+import {LuChevronLeft} from "react-icons/lu/chevronleft";
+import { LuChevronRight} from "react-icons/lu/chevronright";
 import { Link, useParams } from "react-router-dom";
 import notImg from "../Assets/not-img.png"
 import { Carousel } from 'react-responsive-carousel';
