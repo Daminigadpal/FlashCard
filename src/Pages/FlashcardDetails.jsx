@@ -117,7 +117,7 @@ const [pdf, setPdf] = useState();
           {user.cards.map((card, index) => (
             <div key={index} className=" grid grid-cols-5 mx-4 px-5 gap-5 ">
             <div className=" col-start-1 col-span-3 m-auto">
-              <img className=" rounded-lg object-fill drop-shadow-lg " src={card.cardImage}  alt="profile" />
+              <img className=" rounded-lg h-40 object-fill drop-shadow-lg " src={card.cardImage}  alt="profile" />
             </div>
             <div className="col-start-4 col-span-7 text-sm text-left pl-3">
               <p className="text-base font-semibold mb-3 leading-3 "> {card.cardname} </p>

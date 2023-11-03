@@ -13,20 +13,23 @@ import { Persist } from "formik-persist";
 
 import 'react-toastify/dist/ReactToastify.css';
 
-const App = () => {
+function App() {
+
   const [userData, setUserData]=useState([]);
   
   const handleFormSubmit = (values) =>{
-    localStorage.setItem('userData',JSON.stringify(values))
+    localStorage.setItem('userData',JSON.stringify([...userData, values]))
     setUserData([...userData,values]);
   };
-
+  
   useEffect(()=>{
-   const storedData = localStorage.getItem('userData');
+    const storedData = localStorage.getItem('userData');
    // Parse the JSON string into an array
-   const parsedData = JSON.stringify(storedData);
-   setUserData([...parsedData]);
+   if (storedData){
+    setUserData(JSON.parse(storedData) || [])
+   }
   },[])
+ 
 
   const handleRemoveUser = (index) => {
     const updatedUserData = [...userData];
@@ -42,8 +45,8 @@ const App = () => {
       <ToastContainer />
       <Routes>
         <Route path="/" element={<CreateFlashcard onSubmit={ handleFormSubmit} />}></Route>
-        <Route path="/myflashcard" element={<MyFlashcard userData= {userData} onRemove={handleRemoveUser}/>}></Route>
-        <Route path="/flashcarddetails/:id" element={<FlashcardDetails userData= {userData}/>}></Route>
+        <Route path="/myflashcard" element={<MyFlashcard userData={userData} onRemove={handleRemoveUser}/>}></Route>
+        <Route path="/flashcarddetails/:id" element={<FlashcardDetails userData={userData}/>}></Route>
       </Routes>
 
       </div>

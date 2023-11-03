@@ -18,19 +18,18 @@ const truncateText = (text, maxLength) => {
 };
 
 
-const MyFlashcard = ({userData =[], onRemove }) => {
+const MyFlashcard = ({userData, onRemove }) => {
 
-  console.log(userData.map); // Debug line
   // const location = useLocation();
   // const flashcardData = location.state && location.state.flashcardData;
-
-
+  
+  
   return (
     <>
     {userData.length !== 0 ? (
     <div className=" mx-40 mb-6 grid grid-cols-3 gap-9">
-      {/* 1 up card */}
-      {userData ((user, index) => (
+      
+      {userData.map ((user, index) => (
 
                   
        
@@ -76,14 +75,14 @@ const MyFlashcard = ({userData =[], onRemove }) => {
               {/* view card button  */}
               <div className="flex space-x-11 justify-center ">
                 <Link to={`/flashcarddetails/${index}`}>
-                  <button className="mt-4 border-2 rounded-[4px] py-[1px] w-24 hover:bg-red-500 hover:text-white hover:shadow-rose-300 shadow-lg  border-red-200 hover:border-red-500 text-red-500 font-medium ">
+                  <button className="mt-4 border-[1px] rounded-[4px] py-[2px] w-24 bg-red-500 text-white shadow-lg  border-red-500  font-medium ">
                      Details
                   </button>
                 </Link>
 
                 <button
                   onClick={() => onRemove(index)}
-                  className="mt-4 border-2 rounded-[4px] w-24 py-[2px] hover:bg-red-500 hover:text-white hover:shadow-rose-300 shadow-lg border-red-200 hover:border-red-500 text-red-500 font-medium "
+                  className="mt-4 border-[1px] rounded-[4px] w-24 py-[2px] border-red-200 hover:border-red-500 text-red-600 font-medium "
                 >
                   Remove
                 </button>
