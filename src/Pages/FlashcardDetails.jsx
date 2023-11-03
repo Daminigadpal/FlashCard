@@ -7,8 +7,7 @@ import { BsArrowLeft } from "react-icons/bs";
 import { LiaShareSolid } from "react-icons/lia";
 import { FiDownload } from "react-icons/fi";
 import { BsPrinter } from "react-icons/bs";
-import {LuChevronLeft, LuChevronRight} from "react-icons/lu"
-import { Document, Page } from "react-pdf";
+import {LuChevronLeft, LuChevronRight} from "react-icons/lu";
 
 const FlashcardDetails = ({ userData }) => {
   const { id } = useParams();
