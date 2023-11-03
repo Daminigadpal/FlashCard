@@ -1,13 +1,13 @@
 import React, {useState} from "react";
+import { LiaShareSolid } from "react-icons/lia";
+import {LuChevronLeft, LuChevronRight} from "react-icons/lu";
 import { Link, useParams } from "react-router-dom";
 import notImg from "../Assets/not-img.png"
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { BsArrowLeft } from "react-icons/bs";
-import { LiaShareSolid } from "react-icons/lia";
 import { FiDownload } from "react-icons/fi";
 import { BsPrinter } from "react-icons/bs";
-import {LuChevronLeft, LuChevronRight} from "react-icons/lu";
 
 const FlashcardDetails = ({ userData }) => {
   const { id } = useParams();
