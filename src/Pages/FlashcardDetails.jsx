@@ -4,10 +4,12 @@ import notImg from "../Assets/not-img.png"
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { BsArrowLeft } from "react-icons/bs";
-import { LiaShareSolid } from "react-icons/lia";
+// import { LiaShareSolid } from "react-icons/lia";
+import {FcShare} from "react-icons/fc"
 import { FiDownload } from "react-icons/fi";
 import { BsPrinter } from "react-icons/bs";
-import {LuChevronLeft, LuChevronRight} from "react-icons/lu"
+// import {LuChevronLeft, LuChevronRight} from "react-icons/lu"
+import {AiOutlineLeft, AiOutlineRight} from "react-icons/ai";
 import { Document, Page } from "react-pdf";
 
 const FlashcardDetails = ({ userData }) => {
@@ -133,20 +135,20 @@ const [pdf, setPdf] = useState();
         <div className='mt-9 flex justify-center pb-8'>
         <div className="flex items-center carousel-navigation space-x-16">
           <span className="carousel-arrow cursor-pointer" onClick={goToPreviousSlide}>
-          <LuChevronLeft className="text-2xl hover:text-red-500"/>
+          <AiOutlineLeft className="text-2xl hover:text-red-500"/>
           </span>
           <span className="page-indicator">
             {activeIndex + 1}/{user.cards.length}
           </span>
           <span className="carousel-arrow cursor-pointer" onClick={goToNextSlide}>
-           <LuChevronRight className="text-2xl hover:text-red-500"/>
+           <AiOutlineRight className="text-2xl hover:text-red-500"/>
           </span>
         </div>
       </div>
       </div>
           <div className="w-60 ">
             
-              <button onClick={handleShare} className="font-medium rounded-lg w-full drop-shadow-lg px-6 flex items-center py-2 bg-white"><LiaShareSolid className="mr-5 text-lg"/> Share</button>
+              <button onClick={handleShare} className="font-medium rounded-lg w-full drop-shadow-lg px-6 flex items-center py-2 bg-white"><FcShare className="mr-5 text-lg"/> Share</button>
             
               <button onClick={handleDownload} className="font-medium rounded-lg w-full drop-shadow-lg px-6 my-4 flex items-center py-2 bg-white"><FiDownload className="mr-5 text-lg" /> Download</button>
             

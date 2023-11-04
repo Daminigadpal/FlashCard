@@ -29,7 +29,7 @@ const CreateFlashCard = ({ onSubmit }) => {
   const [DisableImage, setDisableImage] = useState(true);
   const dispatch = useDispatch();
   const filePickerRef = useRef(null);
-  const editRef = useRef();
+  // const editRef = useRef();
   const filePicker = useRef(null);
   // This function will save the form values to local storage
   const saveForm = (values) => {
@@ -42,34 +42,12 @@ const CreateFlashCard = ({ onSubmit }) => {
     return savedValues ? JSON.parse(savedValues) : {};
   };
 
-  // const [groupImg, setGroupImg] = useState(""); // Import navigate
-  // Load the groupname and groupdescription from local storage
-  // const navigate = useNavigate();
-  // useEffect(() => {
-  //   const storedGroupname = localStorage.getItem("groupname");
-  //   const storedGroupdescription = localStorage.getItem("groupdescription");
+  const handleEditButtonClick = (index) => {
+    editRef.current[index].focus();
+  }
 
-  //   if (storedGroupname) {
-  //     // If groupname exists in local storage, set it in the form
-  //     setFieldValue("groupname", storedGroupname);
-  //   }
-
-  //   if (storedGroupdescription) {
-  //     // If groupdescription exists in local storage, set it in the form
-  //     setFieldValue("groupdescription", storedGroupdescription);
-  //   }
-  // }, []);
-
-  //   const onSubmit = (values, actions) => {
-  //     dispatch(setFlashCard(values));
-  //     actions.resetForm();
-  //     // localStorage.setItem("groupname", values.groupname);
-  //     // localStorage.setItem("groupdescription", values.groupdescription);
-
-  //     // Send data to MyFlashCard and navigate to it
-  //     // navigate("/myflashcard", { state: { flashcardData: values } });
-  // };
-
+  const editRef = useRef([]);
+  
   return (
     <Formik
       initialValues={{
@@ -195,7 +173,7 @@ const CreateFlashCard = ({ onSubmit }) => {
           {/* card  */}
 
           <div
-            className={` text-black drop-shadow-lg pt-8 bg-white border shadow-lg rounded-lg py-10 pl-10 mt-5 ${
+            className={` text-black drop-shadow-lg pt-8 bg-white border shadow-lg rounded-lg p-10 mt-5 ${
               DisableCards ? "pointer-events-none, opacity-50" : ""
             }`}
           >
@@ -222,7 +200,7 @@ const CreateFlashCard = ({ onSubmit }) => {
                               <Field
                                 type="text"
                                 id={`cards.${index}.cardname`}
-                                innerRef={editRef[index]}
+                                innerRef={(ref)=>editRef.current[index]=ref}
                                 name={`cards.${index}.cardname`}
                                 className="border-gray-200 mt-1 border-[1px] p-2 md:w-72 2xl:w-96 rounded-lg bg-gray-50"
                                 placeholder="javascript"
@@ -266,18 +244,38 @@ const CreateFlashCard = ({ onSubmit }) => {
                                     alt="cardimg"
                                     className="h-20 shadow-md mt-7 border-[1px] object-contain rounded-lg"
                                   />
-                                  
+                                  <div className="  ml-9 space-y-3 mt-9">
+                                    <button
+                                      type="button"
+                                      onClick={() => 
+                                        
+                                        handleEditButtonClick(index)
+                                      }
+                                      className=" text-blue-500 block text-lg font-extrabold p-1"
+                                    >
+                                      <AiOutlineEdit/>
+                                    </button>
+
+                                    <button
+                                      type="button"
+                                      className=" text-red-500  text-lg  p-1"
+                                      onClick={() => arrayHelper.remove(index)}
+                                    >
+                                      <AiOutlineDelete />
+                                    </button>
+                                  </div>
                                 </div>
-                              ) : (<div className=" flex">
+                              ) : (
                                 <button
                                   type="button"
-                                  className=" md:flex items-center px-4  mt-5 border-[1px] border-blue-500 text-blue-600 drop-shadow-lg font-semibold rounded-md"
-                                  onClick={() => filePicker.current.click()}
+                                  className=" md:flex items-center px-10 py-2 mt-5 border-[1px] border-blue-500 text-blue-600 
+                            drop-shadow-lg font-semibold rounded-md"
+                                  onClick={() => filePickerRef.current.click()}
                                   disabled={DisableImage}
                                 >
                                   <input
                                     type="file"
-                                    ref={filePicker}
+                                    ref={filePickerRef}
                                     value={card.cardImage}
                                     onChange={(e) => {
                                       const file = e.target.files[0];
@@ -295,27 +293,6 @@ const CreateFlashCard = ({ onSubmit }) => {
                                   />
                                   <span>Select Image</span>
                                 </button>
-
-                                <div className="  ml-9 space-y-3 mt-7">
-                                    <button
-                                      type="button"
-                                      onClick={() => {
-                                        editRef[index].focus(); 
-                                      }}
-                                      className=" text-blue-500 block text-lg font-extrabold p-1"
-                                    >
-                                      <AiOutlineEdit />
-                                    </button>
-
-                                    <button
-                                      type="button"
-                                      className=" text-red-500  text-lg  p-1"
-                                      onClick={() => arrayHelper.remove(index)}
-                                    >
-                                      <AiOutlineDelete />
-                                    </button>
-                                  </div>
-                                </div>
                               )}
                             </div>
                           </div>
