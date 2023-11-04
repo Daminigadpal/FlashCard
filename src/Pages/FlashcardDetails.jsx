@@ -1,14 +1,14 @@
 import React, {useState} from "react";
-import { LiaShareSolid } from "react-icons/lia/sharesolid";
-import {LuChevronLeft} from "react-icons/lu/chevronleft";
-import { LuChevronRight} from "react-icons/lu/chevronright";
 import { Link, useParams } from "react-router-dom";
 import notImg from "../Assets/not-img.png"
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { BsArrowLeft } from "react-icons/bs";
+import { LiaShareSolid } from "react-icons/lia";
 import { FiDownload } from "react-icons/fi";
 import { BsPrinter } from "react-icons/bs";
+import {LuChevronLeft, LuChevronRight} from "react-icons/lu"
+import { Document, Page } from "react-pdf";
 
 const FlashcardDetails = ({ userData }) => {
   const { id } = useParams();
@@ -105,7 +105,7 @@ const [pdf, setPdf] = useState();
             </div>
           </div>
           <div>
-          <div className="bg-white drop-shadow-lg  py-9 w-[600px] mr-5  rounded-md">
+          <div className="bg-white drop-shadow-lg  py-9 w-[600px] mr-5 px-4  rounded-md">
           <Carousel
           showArrows={false}
           showStatus={false}
@@ -115,7 +115,7 @@ const [pdf, setPdf] = useState();
           onClickItem={(index) => setActiveIndex(index)}
         >
           {user.cards.map((card, index) => (
-            <div key={index} className=" grid grid-cols-5 mx-4 px-5 gap-5 ">
+            <div key={index} className=" grid grid-cols-5 mx-4 px-5 gap-5 h-56">
             <div className=" col-start-1 col-span-3 m-auto">
               <img className=" rounded-lg h-40 object-fill drop-shadow-lg " src={card.cardImage}  alt="profile" />
             </div>
@@ -130,7 +130,7 @@ const [pdf, setPdf] = useState();
       </Carousel> 
         </div>
 
-        <div className='mt-9 flex justify-center w-full pb-8'>
+        <div className='mt-9 flex justify-center pb-8'>
         <div className="flex items-center carousel-navigation space-x-16">
           <span className="carousel-arrow cursor-pointer" onClick={goToPreviousSlide}>
           <LuChevronLeft className="text-2xl hover:text-red-500"/>

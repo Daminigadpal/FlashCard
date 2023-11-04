@@ -195,7 +195,7 @@ const CreateFlashCard = ({ onSubmit }) => {
           {/* card  */}
 
           <div
-            className={` text-black drop-shadow-lg pt-8 bg-white border shadow-lg rounded-lg p-10 mt-5 ${
+            className={` text-black drop-shadow-lg pt-8 bg-white border shadow-lg rounded-lg py-10 pl-10 mt-5 ${
               DisableCards ? "pointer-events-none, opacity-50" : ""
             }`}
           >
@@ -222,7 +222,7 @@ const CreateFlashCard = ({ onSubmit }) => {
                               <Field
                                 type="text"
                                 id={`cards.${index}.cardname`}
-                                innerRef={editRef}
+                                innerRef={editRef[index]}
                                 name={`cards.${index}.cardname`}
                                 className="border-gray-200 mt-1 border-[1px] p-2 md:w-72 2xl:w-96 rounded-lg bg-gray-50"
                                 placeholder="javascript"
@@ -266,37 +266,18 @@ const CreateFlashCard = ({ onSubmit }) => {
                                     alt="cardimg"
                                     className="h-20 shadow-md mt-7 border-[1px] object-contain rounded-lg"
                                   />
-                                  <div className="  ml-9 space-y-3 mt-9">
-                                    <button
-                                      type="button"
-                                      onClick={() => {
-                                        editRef.current.focus();
-                                      }}
-                                      className=" text-blue-500 block text-lg font-extrabold p-1"
-                                    >
-                                      <AiOutlineEdit />
-                                    </button>
-
-                                    <button
-                                      type="button"
-                                      className=" text-red-500  text-lg  p-1"
-                                      onClick={() => arrayHelper.remove(index)}
-                                    >
-                                      <AiOutlineDelete />
-                                    </button>
-                                  </div>
+                                  
                                 </div>
-                              ) : (
+                              ) : (<div className=" flex">
                                 <button
                                   type="button"
-                                  className=" md:flex items-center px-10 py-2 mt-5 border-[1px] border-blue-500 text-blue-600 
-                            drop-shadow-lg font-semibold rounded-md"
-                                  onClick={() => filePickerRef.current.click()}
+                                  className=" md:flex items-center px-4  mt-5 border-[1px] border-blue-500 text-blue-600 drop-shadow-lg font-semibold rounded-md"
+                                  onClick={() => filePicker.current.click()}
                                   disabled={DisableImage}
                                 >
                                   <input
                                     type="file"
-                                    ref={filePickerRef}
+                                    ref={filePicker}
                                     value={card.cardImage}
                                     onChange={(e) => {
                                       const file = e.target.files[0];
@@ -314,6 +295,27 @@ const CreateFlashCard = ({ onSubmit }) => {
                                   />
                                   <span>Select Image</span>
                                 </button>
+
+                                <div className="  ml-9 space-y-3 mt-7">
+                                    <button
+                                      type="button"
+                                      onClick={() => {
+                                        editRef[index].focus(); 
+                                      }}
+                                      className=" text-blue-500 block text-lg font-extrabold p-1"
+                                    >
+                                      <AiOutlineEdit />
+                                    </button>
+
+                                    <button
+                                      type="button"
+                                      className=" text-red-500  text-lg  p-1"
+                                      onClick={() => arrayHelper.remove(index)}
+                                    >
+                                      <AiOutlineDelete />
+                                    </button>
+                                  </div>
+                                </div>
                               )}
                             </div>
                           </div>
