@@ -150,7 +150,7 @@ const [pdf, setPdf] = useState();
       </div>
           <div className="w-60 2xl:w-72">
             
-              <button onClick={handleShare} className="font-medium rounded-lg w-full drop-shadow-lg px-6 2xl:px-9 flex items-center py-2 2xl:py-3 bg-white"><FaShare className="mr-5 text-lg 2xl:text-xl"/> Share</button>
+              <button onClick={handleShare} className="font-medium rounded-lg w-full drop-shadow-lg px-6 2xl:px-9 flex items-center py-2 2xl:py-3 bg-white"><FcShare className="mr-5 text-lg 2xl:text-xl"/> Share</button>
             
               <button onClick={handleDownload} className="font-medium rounded-lg w-full drop-shadow-lg 2xl:py-3 2xl:px-9 px-6 my-4 flex items-center py-2 bg-white"><FiDownload className="mr-5 text-lg 2xl:text-2xl" /> Download</button>
             
