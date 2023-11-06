@@ -27,7 +27,7 @@ const MyFlashcard = ({userData, onRemove }) => {
   return (
     <>
     {userData.length !== 0 ? (
-    <div className=" mx-40 mb-6 grid grid-cols-3 gap-9">
+    <div className=" mx-40 2xl:mx-64 mb-6 grid grid-cols-3 gap-9">
       
       {userData.map ((user, index) => (
 

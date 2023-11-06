@@ -4,10 +4,10 @@ import { NavLink } from "react-router-dom";
 const Navbar = () => {
   return (
     <div className="w-full pt-6 px-9 lg:px-40 2xl:px-64 pb-3">
-      <h1 className="text-2xl text-black font-semibold mb-4  pt-4 pb-2">
+      <h1 className="text-2xl text-black font-semibold mb-4 2xl:text-3xl 2xl:font-bold 2xl:pt-7 pt-4 pb-2 2xl:pb-3">
         Create Flashcard
       </h1>
-      <div className="flex font-medium  space-x-12 pb-3 px-2">
+      <div className="flex font-medium 2xl:text-xl 2xl:font-bold space-x-12 pb-3 px-2">
         <button className=" ">
           <NavLink
             to={"/"} 
