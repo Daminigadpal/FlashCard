@@ -35,7 +35,7 @@ const MyFlashcard = ({userData, onRemove }) => {
        
             
               
-        <div key={index} className="round-[1px]">      
+        <div key={index} className="round-[1px] 2xl:text-xl">      
 
         <img className="object-cover rounded-tl-md banner rounded-tr-md brightness-[100%] w-full  h-24 " src={user.cards[0].cardImage}  alt="banner" />
                     

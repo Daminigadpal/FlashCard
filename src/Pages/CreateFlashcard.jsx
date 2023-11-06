@@ -79,7 +79,7 @@ const CreateFlashCard = ({ onSubmit }) => {
       }}
     >
       {({ values, isSubmitting, setFieldValue }) => (
-        <Form className="max-w-screen-2xl  mx-auto text-black-600 text-bold font-medium px-4 lg:px-40 2xl:px-16">
+        <Form className="max-w-screen-2xl  mx-auto text-black-600 text-bold 2xl:text-xl font-medium px-4 lg:px-40 2xl:px-16">
           {/* Create group */}
           <div className="px-10 py-4 bg-white drop-shadow-lg rounded-lg">
             {/* Name Group */}
