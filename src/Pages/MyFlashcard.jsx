@@ -5,6 +5,8 @@ import { useLocation } from "react-router-dom";
 import wolfImg from "../Assets/wolf-img.jpg";
 import dogImg from "../Assets/dog-img.png";
 import Capture from "../Assets/capture.png"
+import ShareModal from "../Components/Card-Ui/ShareModal";
+
 
 
 
@@ -26,6 +28,9 @@ const MyFlashcard = ({userData, onRemove }) => {
   
   return (
     <>
+    {/* <div>
+      <ShareModal/>
+    </div> */}
     {userData.length !== 0 ? (
     <div className=" mx-40 mb-6 grid grid-cols-3 gap-9">
       
