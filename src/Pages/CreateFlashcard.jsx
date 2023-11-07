@@ -27,6 +27,7 @@ const LOCAL_STORAGE_KEY = "my-form";
 const CreateFlashCard = ({ onSubmit }) => {
   const [DisableCards, setDisableCards] = useState(true);
   const [DisableImage, setDisableImage] = useState(true);
+  const [wordCount, setWordCount] = useState(0);
   const dispatch = useDispatch();
   const filePickerRef = useRef(null);
   // const editRef = useRef();
@@ -47,6 +48,15 @@ const CreateFlashCard = ({ onSubmit }) => {
   }
 
   const editRef = useRef([]);
+
+
+//   const handleCardDescriptionChange = (e, index) => {
+//   const newDescription = e.target.value;
+//   // Split the description into words (space-separated)
+//   const words = newDescription.trim().split(/\s+/);
+//   setWordCount(words.length);
+
+// };
   
   return (
     <Formik
@@ -72,7 +82,7 @@ const CreateFlashCard = ({ onSubmit }) => {
         resetForm(); // Clear the form
         toast.success("👍 Flashcard Created !", {
           position: "top-center",
-          autoClose: 4000, // 3 seconds
+          autoClose: 3000, // 3 seconds
           hideProgressBar: false,
         });
         // saveForm(values);
@@ -136,7 +146,7 @@ const CreateFlashCard = ({ onSubmit }) => {
                       hidden
                     />
                     <AiOutlineUpload className="w-5 h-5" />
-                    {values.groupImg ? <span>Change Image</span> :<span>Upload Image</span>}
+                    {values.groupImg ? <span>Change Image</span> : <span>Upload Image</span>}
                   </button>
                   
                
@@ -225,7 +235,8 @@ const CreateFlashCard = ({ onSubmit }) => {
                                 as="textarea"
                                 id={`cards.${index}.carddescription`}
                                 name={`cards.${index}.carddescription`}
-                                className="border-gray-200 mt-1 border-[1px] p-2 h-11 md:w-[350px] 2xl:w-[420px] rounded-lg bg-slate-50 resize-none"
+                                // onChange={(e) => handleCardDescriptionChange(e, index)}
+                                className= " border-gray-200 mt-1 border-[1px] p-2 h-11 md:w-[350px] 2xl:w-[420px] rounded-lg bg-slate-50 resize-none"
                                 placeholder="This is description"
                                 disabled={DisableCards}
                               />

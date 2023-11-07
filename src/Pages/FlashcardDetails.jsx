@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import { Link, useParams } from "react-router-dom";
-import notImg from "../Assets/not-img.png"
+import notImg from "../Assets/not-img.png";
+import Img from "../Assets/img.png";
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { FaArrowLeft } from 'react-icons/fa';
@@ -119,12 +120,12 @@ const [pdf, setPdf] = useState();
           onClickItem={(index) => setActiveIndex(index)}
         >
           {user.cards.map((card, index) => (
-            <div key={index} className=" grid grid-cols-5 mx-4 px-5 gap-5 h-56 2xl:h-80">
-            <div className=" col-start-1 col-span-3 m-auto">
-              <img className=" rounded-lg h-40 2xl:h-56 object-fill drop-shadow-lg " src={card.cardImage}  alt="profile" />
+            <div key={index} className=" grid grid-cols-5 px-5 gap-5 h-56 2xl:h-[340px]">
+            <div className=" col-start-1 col-span-3 my-auto">
+              <img className=" rounded-lg h-40 2xl:h-56 object-fill drop-shadow-lg " src={card.cardImage || Img }  alt="profile" />
             </div>
-            <div className="col-start-4 col-span-7 text-sm 2xl:text-xl text-left pl-3">
-              <p className="text-base 2xl:text-xl font-semibold mb-3 leading-3 "> {card.cardname} </p>
+            <div className="col-start-4 col-span-6 text-sm 2xl:text-xl text-left pl-3">
+              <p className="text-base 2xl:text-xl font-semibold mb-1 leading-3 "> {card.cardname} </p>
               <p className=" text-slate-500">
                 {card.carddescription} 
               </p>
