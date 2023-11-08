@@ -29,7 +29,7 @@ const CreateFlashCard = ({ onSubmit }) => {
   const [DisableImage, setDisableImage] = useState(true);
   const [wordCount, setWordCount] = useState(0);
   const dispatch = useDispatch();
-  const filePickerRef = useRef(null);
+  // const filePickerRef = useRef(null);
   // const editRef = useRef();
   const filePicker = useRef(null);
   // This function will save the form values to local storage
@@ -49,6 +49,13 @@ const CreateFlashCard = ({ onSubmit }) => {
 
   const editRef = useRef([]);
 
+  // Define a function to handle card image click
+const handleCardImageClick = (index) => {
+  // Focus on the corresponding card name input field
+  editRef.current[index].focus();
+}
+
+const filePickerRef = useRef([]);
 
 //   const handleCardDescriptionChange = (e, index) => {
 //   const newDescription = e.target.value;
@@ -254,8 +261,9 @@ const CreateFlashCard = ({ onSubmit }) => {
                                     src={card.cardImage}
                                     alt="cardimg"
                                     className="h-20 shadow-md mt-7 border-[1px] object-contain rounded-lg"
+                                    onClick={() => handleCardImageClick(index)}
                                   />
-                                  <div className="  ml-9 space-y-3 mt-9">
+                                  <div className=" ml-2 space-y-3 mt-9">
                                     <button
                                       type="button"
                                       onClick={() => 
@@ -281,12 +289,12 @@ const CreateFlashCard = ({ onSubmit }) => {
                                   type="button"
                                   className=" md:flex items-center px-10 py-2 mt-5 border-[1px] border-blue-500 text-blue-600 
                             drop-shadow-lg font-semibold rounded-md"
-                                  onClick={() => filePickerRef.current.click()}
+                                  onClick={() => filePickerRef.current[index].click()}
                                   disabled={DisableImage}
                                 >
                                   <input
                                     type="file"
-                                    ref={filePickerRef}
+                                    ref={(ref) => (filePickerRef.current[index]= ref)}
                                     value={card.cardImage}
                                     onChange={(e) => {
                                       const file = e.target.files[0];
@@ -303,6 +311,7 @@ const CreateFlashCard = ({ onSubmit }) => {
                                     hidden
                                   />
                                   <span>Select Image</span>
+                                  
                                 </button>
                               )}
                             </div>

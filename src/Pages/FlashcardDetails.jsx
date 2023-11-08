@@ -14,11 +14,15 @@ import { BsPrinter } from "react-icons/bs";
 // import {LuChevronLeft, LuChevronRight} from "react-icons/lu"
 import {AiOutlineLeft, AiOutlineRight} from "react-icons/ai";
 import { Document, Page } from "react-pdf";
+import ShareModal from "../Components/Card-Ui/ShareModal";
 
 const FlashcardDetails = ({ userData }) => {
   const { id } = useParams();
   const user = userData[id];
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isOpen,setOpen]= useState(false);
+  // const [openModal]=useState(true);
+  // const [closeModal]=useState(false);
 const [pdf, setPdf] = useState();
   if (!user) {
     return(
@@ -32,21 +36,26 @@ const [pdf, setPdf] = useState();
         </div>
     );
   };
+
+  
   const handleShare = () => {
     // Create a shareable link to the current details page
-    const shareableLink = window.location.href;
+    // const shareableLink = window.location.href;
+
+    setOpen (true);
+    
 
     // Use the Web Share API to share the link
-    if (navigator.share) {
-      navigator.share({
-        title: `FlashCard: ${user.groupname}`,
-        text: `Check out the FlashCard ${user.groupname}`,
-        url: shareableLink,
-      });
-    } else {
-      // Provide a fallback for browsers that don't support the Web Share API
-      alert(`Shareable Link: ${shareableLink}`);
-    }
+    // if (navigator.share) {
+    //   navigator.share({
+    //     title: `FlashCard: ${user.groupname}`,
+    //     text: `Check out the FlashCard ${user.groupname}`,
+    //     url: shareableLink,
+    //   });
+    // } else {
+    //   // Provide a fallback for browsers that don't support the Web Share API
+    //   alert(`Shareable Link: ${shareableLink}`);
+    // }
   };
 
   const handleDownload = () => {
@@ -150,14 +159,18 @@ const [pdf, setPdf] = useState();
       </div>
       </div>
           <div className="w-60 2xl:w-72">
+            <div>
             
               <button onClick={handleShare} className="font-medium rounded-lg w-full drop-shadow-lg px-6 2xl:px-9 flex items-center py-2 2xl:py-3 bg-white"><FcShare className="mr-5 text-lg 2xl:text-xl"/> Share</button>
-            
+              {isOpen && <ShareModal/>}
+              </div>
+              
               <button onClick={handleDownload} className="font-medium rounded-lg w-full drop-shadow-lg 2xl:py-3 2xl:px-9 px-6 my-4 flex items-center py-2 bg-white"><FiDownload className="mr-5 text-lg 2xl:text-2xl" /> Download</button>
             
               <button onClick={handlePrint} className="font-medium rounded-lg w-full drop-shadow-lg px-6 2xl:py-3 2xl:px-9 my-4 flex items-center py-2 bg-white"><BsPrinter className="mr-5 text-lg 2xl:text-2xl" /> Print</button>
             
           </div>
+          {/* <ShareModal open={isOpen}/> */}
         </div>
       </div>
     </>

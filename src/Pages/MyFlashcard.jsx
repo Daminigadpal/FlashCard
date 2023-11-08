@@ -4,6 +4,11 @@ import notImg from "../Assets/not-img.png";
 import { useLocation } from "react-router-dom";
 import wolfImg from "../Assets/wolf-img.jpg";
 import dogImg from "../Assets/dog-img.png";
+// import Capture from "../Assets/capture.png"
+import ShareModal from "../Components/Card-Ui/ShareModal";
+
+
+
 import Capture from "../Assets/capture.png";
 import Img from "../Assets/img.png";
 import profileImg from "../Assets/profileimg.png";
@@ -38,7 +43,7 @@ const MyFlashcard = ({ userData, onRemove }) => {
                 <div>
                   <img
                     className=" border-[3px] object-cover border-white relative m-auto -top-8 rounded-full w-[75px] h-[75px]"
-                    src={user.groupImg || profileImg}
+                    src={user.groupImg || Capture}
                     alt="profile_img"
                   />
                 </div>
