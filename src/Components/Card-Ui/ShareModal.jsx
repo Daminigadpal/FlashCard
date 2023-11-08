@@ -38,6 +38,8 @@ const ShareModal = (isOpen, closeModal) => {
           }, 2000);
       }, [isCopied]);
 
+    
+
       // const handleCopy = () => {
       //   setIsCopied(true);
       // };
@@ -54,7 +56,7 @@ const ShareModal = (isOpen, closeModal) => {
           closeModal();
         }}
       >
-         ✕
+         
       </Button>
       <Modal.Header className="font-bold">Share</Modal.Header>
       <Modal.Body>
@@ -91,7 +93,7 @@ const ShareModal = (isOpen, closeModal) => {
             </WhatsappShareButton>
             <FacebookShareButton url="https://www.facebook.com/">
               <img
-                 src={FacebookIcon}
+                 src={facebook}
                  alt="facebook"
                 className="w-10 p-2 bg-slate-100 rounded-lg cursor-pointer"
               />

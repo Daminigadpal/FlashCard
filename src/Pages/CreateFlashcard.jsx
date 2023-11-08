@@ -27,8 +27,9 @@ const LOCAL_STORAGE_KEY = "my-form";
 const CreateFlashCard = ({ onSubmit }) => {
   const [DisableCards, setDisableCards] = useState(true);
   const [DisableImage, setDisableImage] = useState(true);
+  const [wordCount, setWordCount] = useState(0);
   const dispatch = useDispatch();
-  const filePickerRef = useRef(null);
+  // const filePickerRef = useRef(null);
   // const editRef = useRef();
   const filePicker = useRef(null);
   // This function will save the form values to local storage
@@ -47,6 +48,22 @@ const CreateFlashCard = ({ onSubmit }) => {
   }
 
   const editRef = useRef([]);
+
+  // Define a function to handle card image click
+const handleCardImageClick = (index) => {
+  // Focus on the corresponding card name input field
+  editRef.current[index].focus();
+}
+
+const filePickerRef = useRef([]);
+
+//   const handleCardDescriptionChange = (e, index) => {
+//   const newDescription = e.target.value;
+//   // Split the description into words (space-separated)
+//   const words = newDescription.trim().split(/\s+/);
+//   setWordCount(words.length);
+
+// };
   
   return (
     <Formik
@@ -72,14 +89,14 @@ const CreateFlashCard = ({ onSubmit }) => {
         resetForm(); // Clear the form
         toast.success("👍 Flashcard Created !", {
           position: "top-center",
-          autoClose: 4000, // 3 seconds
+          autoClose: 3000, // 3 seconds
           hideProgressBar: false,
         });
         // saveForm(values);
       }}
     >
       {({ values, isSubmitting, setFieldValue }) => (
-        <Form className="max-w-screen-2xl  mx-auto text-black-600 text-bold font-medium px-4 lg:px-40 2xl:px-16">
+        <Form className="max-w-screen-2xl  mx-auto text-black-600 text-bold 2xl:text-xl font-medium px-4 lg:px-40 2xl:px-16">
           {/* Create group */}
           <div className="px-10 py-4 bg-white drop-shadow-lg rounded-lg">
             {/* Name Group */}
@@ -136,7 +153,7 @@ const CreateFlashCard = ({ onSubmit }) => {
                       hidden
                     />
                     <AiOutlineUpload className="w-5 h-5" />
-                    {values.groupImg ? <span>Change Image</span> :<span>Upload Image</span>}
+                    {values.groupImg ? <span>Change Image</span> : <span>Upload Image</span>}
                   </button>
                   
                
@@ -225,7 +242,8 @@ const CreateFlashCard = ({ onSubmit }) => {
                                 as="textarea"
                                 id={`cards.${index}.carddescription`}
                                 name={`cards.${index}.carddescription`}
-                                className="border-gray-200 mt-1 border-[1px] p-2 h-11 md:w-[350px] 2xl:w-[420px] rounded-lg bg-slate-50 resize-none"
+                                // onChange={(e) => handleCardDescriptionChange(e, index)}
+                                className= " border-gray-200 mt-1 border-[1px] p-2 h-11 md:w-[350px] 2xl:w-[420px] rounded-lg bg-slate-50 resize-none"
                                 placeholder="This is description"
                                 disabled={DisableCards}
                               />
@@ -243,8 +261,9 @@ const CreateFlashCard = ({ onSubmit }) => {
                                     src={card.cardImage}
                                     alt="cardimg"
                                     className="h-20 shadow-md mt-7 border-[1px] object-contain rounded-lg"
+                                    onClick={() => handleCardImageClick(index)}
                                   />
-                                  <div className="  ml-9 space-y-3 mt-9">
+                                  <div className=" ml-2 space-y-3 mt-9">
                                     <button
                                       type="button"
                                       onClick={() => 
@@ -270,12 +289,12 @@ const CreateFlashCard = ({ onSubmit }) => {
                                   type="button"
                                   className=" md:flex items-center px-10 py-2 mt-5 border-[1px] border-blue-500 text-blue-600 
                             drop-shadow-lg font-semibold rounded-md"
-                                  onClick={() => filePickerRef.current.click()}
+                                  onClick={() => filePickerRef.current[index].click()}
                                   disabled={DisableImage}
                                 >
                                   <input
                                     type="file"
-                                    ref={filePickerRef}
+                                    ref={(ref) => (filePickerRef.current[index]= ref)}
                                     value={card.cardImage}
                                     onChange={(e) => {
                                       const file = e.target.files[0];
@@ -292,6 +311,7 @@ const CreateFlashCard = ({ onSubmit }) => {
                                     hidden
                                   />
                                   <span>Select Image</span>
+                                  
                                 </button>
                               )}
                             </div>

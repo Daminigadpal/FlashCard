@@ -9,7 +9,8 @@ const FlashCardSchema = Yup.object().shape({
   groupdescription: Yup.string().max(
     500,
     " Group Description must be less than 500 characters"
-  ),
+  )
+  .required("Please , Enter Group Name !"),
 
   groupimg: Yup.mixed(),
 
