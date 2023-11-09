@@ -26,7 +26,6 @@ const LOCAL_STORAGE_KEY = "my-form";
 
 const CreateFlashCard = ({ onSubmit }) => {
   const [DisableCards, setDisableCards] = useState(true);
-  const [DisableImage, setDisableImage] = useState(true);
   const [wordCount, setWordCount] = useState(0);
   const dispatch = useDispatch();
   const filePickerRef = useRef(null);
@@ -65,7 +64,6 @@ const CreateFlashCard = ({ onSubmit }) => {
         groupname: "",
         groupdescription: "",
         groupImg: null,
-        Profile: null,
         cards: [
           {
             cardid: nanoid(),
@@ -95,9 +93,7 @@ const CreateFlashCard = ({ onSubmit }) => {
             {/* Name Group */}
             <div className="flex items-end gap-7">
               <div className="flex flex-col ">
-                <label
-                  htmlFor="createGroup"
-                  className="text-gray-600  py-2 mt-2"
+                <label htmlFor="createGroup" className="text-gray-600  py-2 mt-2"
                 >
                   Create Group <span className="text-red-700">*</span>
                 </label>
@@ -111,10 +107,8 @@ const CreateFlashCard = ({ onSubmit }) => {
                     // Enable the carddescription field when group description is filled
                     if (e.target.value) {
                       setDisableCards(false);
-                      setDisableImage(false);
                     } else {
                       setDisableCards(true);
-                      setDisableImage(true);
                     }
                   }}
                 />
@@ -282,7 +276,7 @@ const CreateFlashCard = ({ onSubmit }) => {
                                   className=" md:flex items-center px-10 py-2 mt-5 border-[1px] border-blue-500 text-blue-600 
                             drop-shadow-lg font-semibold rounded-md"
                                   onClick={() => filePickerRef.current.click()}
-                                  disabled={DisableImage}
+                                  disabled={DisableCards}
                                 >
                                   <input
                                     type="file"
