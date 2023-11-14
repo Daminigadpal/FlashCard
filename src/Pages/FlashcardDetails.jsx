@@ -1,18 +1,13 @@
 import React, {useState,useRef} from "react";
 import { Link, useParams } from "react-router-dom";
 import { useReactToPrint } from "react-to-print";
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import notImg from "../Assets/not-img.png";
 import Img from "../Assets/img.png";
 import { Carousel } from 'react-responsive-carousel';
-import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import { BsArrowLeft } from "react-icons/bs";
-// import { LiaShareSolid } from "react-icons/lia";
-import {FcShare} from "react-icons/fc"
-import { FiDownload } from "react-icons/fi";
-import { BsPrinter } from "react-icons/bs";
-// import {LuChevronLeft, LuChevronRight} from "react-icons/lu"
-import {AiOutlineLeft, AiOutlineRight} from "react-icons/ai";
+import {AiOutlineShareAlt,AiFillPrinter, AiOutlineArrowLeft ,AiOutlineDownload,AiOutlineLeft, AiOutlineRight} from "react-icons/ai"
 import handleDownload from "../Components/handleDownload";
+import ShareModal from "../Components/Card-Ui/ShareModal";
 
 const FlashcardDetails = ({ userData }) => {
   const { id } = useParams();
@@ -21,11 +16,12 @@ const FlashcardDetails = ({ userData }) => {
   const printRef = useRef();
   const user = userData[id];
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isOpen,setOpen]= useState(false);
   const [selectorCardIndex,setSelectorCardIndex]=useState(0);
+
   const handlePrint = useReactToPrint({
     content: () => printRef.current
   });
-
   const handelCardClick =(index)=>{
     setSelectorCardIndex(index);
     setActiveIndex(index);
@@ -44,13 +40,14 @@ const FlashcardDetails = ({ userData }) => {
         </div>
     );
   };
+
+  
   const handleShare = () => {
-    // Create a shareable link to the current details page
+    setOpen (true);
   };
 
   const downloadPDF = ()=>{
     handleDownload(pdfRef);
-
   };
 
   const goToPreviousSlide = () => {
@@ -72,22 +69,22 @@ const FlashcardDetails = ({ userData }) => {
           
             <div className=" flex items-center mb-2 ">
             <Link to={"/Myflashcard"}>
-            <BsArrowLeft className="text-rose-600 text-xl 2xl:text-2xl font-extrabold " /></Link>
+            <AiOutlineArrowLeft className="text-rose-600 text-xl  2xl:text-2xl font-extrabold " /></Link>
             
             <h1 className="font-bold text-lg 2xl:text-2xl 2xl:font-bold ml-6 leading-3 ">{user.groupname}</h1></div>
            <div> <p className="ml-11 leading-5 font-normal 2xl:text-xl text-slate-500 ">{user.groupdescription}</p></div>
           
         </div>
         <div className="flex mt-7 2xl:mt-10">
-          <div className="bg-white w-60 2xl:w-72 h-min py-3 px-7 mr-7 drop-shadow-lg rounded-md">
+          <div className="bg-white w-60 2xl:w-72 h-min py-4 px-7 mr-7 drop-shadow-lg rounded-md">
             <div>
               <h2 className="2xl:text-base text-sm   mb-2">Flashcard</h2>
             </div>
                 <hr className=""/>
-            <div className="mt-4">
+            <div className="mt-5">
             {user.cards.map((card,index)=>( 
               <ul key={index} className=" mt-2  font-medium ">
-                <li className={index === selectorCardIndex ? " text-red-500 mb-2" : "text-black mb-1 font-normal"} onClick ={()=> handelCardClick(index)} ><button>{card.cardname}</button></li>
+                <li className={index === selectorCardIndex ? " text-red-500 mb-1" : "text-black mb-1 font-normal"} onClick ={()=> handelCardClick(index)} ><button>{card.cardname}</button></li>
               </ul>
              ) )}
             </div>
@@ -125,26 +122,30 @@ const FlashcardDetails = ({ userData }) => {
         <div className='mt-9 flex justify-center pb-8'>
         <div className="flex items-center carousel-navigation space-x-16">
           <span className="carousel-arrow cursor-pointer" onClick={goToPreviousSlide}>
-          <AiOutlineLeft className="text-2xl hover:text-red-500"/>
+          <AiOutlineLeft className="text-lg font-bold  hover:text-red-500"/>
           </span>
           <span className="page-indicator">
             {activeIndex + 1}/{user.cards.length}
           </span>
           <span className="carousel-arrow cursor-pointer" onClick={goToNextSlide}>
-           <AiOutlineRight className="text-2xl hover:text-red-500"/>
+           <AiOutlineRight className="text-lg hover:text-red-500"/>
           </span>
         </div>
       </div>
       </div>
           <div className="w-60 2xl:w-72">
+            <div>
             
-              <button onClick={handleShare} className="font-medium rounded-lg w-full drop-shadow-lg px-6 2xl:px-9 flex items-center py-2 2xl:py-3 bg-white"><FcShare className="mr-5 text-lg 2xl:text-xl"/> Share</button>
+              <button onClick={handleShare} className="font-medium rounded-lg w-full drop-shadow-lg px-6 2xl:px-9 flex items-center py-2 2xl:py-3 bg-white"><AiOutlineShareAlt className="mr-5 text-xl 2xl:text-xl"/> Share</button>
+              {isOpen && <ShareModal/>}
+              </div>
+              
+              <button onClick={downloadPDF} className="font-medium rounded-lg w-full drop-shadow-lg 2xl:py-3 2xl:px-9 px-6 my-4 flex items-center py-2 bg-white"><AiOutlineDownload className="mr-5 text-xl 2xl:text-2xl" /> Download</button>
             
-              <button onClick={downloadPDF} className="font-medium rounded-lg w-full drop-shadow-lg 2xl:py-3 2xl:px-9 px-6 my-4 flex items-center py-2 bg-white"><FiDownload className="mr-5 text-lg 2xl:text-2xl" /> Download</button>
-            
-              <button onClick={handlePrint} className="font-medium rounded-lg w-full drop-shadow-lg px-6 2xl:py-3 2xl:px-9 my-4 flex items-center py-2 bg-white"><BsPrinter className="mr-5 text-lg 2xl:text-2xl" /> Print</button>
+              <button onClick={handlePrint} className="font-medium rounded-lg w-full drop-shadow-lg px-6 2xl:py-3 2xl:px-9 my-4 flex items-center py-2 bg-white"><AiFillPrinter className="mr-5 text-xl 2xl:text-2xl" /> Print</button>
             
           </div>
+          {/* <ShareModal open={isOpen}/> */}
         </div>
       </div>
     </>

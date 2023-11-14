@@ -21,10 +21,19 @@ export const flashcardSlice = createSlice({
    
       localStorage.setItem("flashcards", JSON.stringify(state.flashcards));
     },
-  },
+
+
+removeCard(state, action) {
+  state.flashcards = state.flashcards.filter(
+    (flashcard) => flashcard.card.groupid !== action.payload
+  );
+  localStorage.setItem("flashcards", JSON.stringify(state.flashcards));
+},
+},
 });
 
-export const { setFlashCard } = flashcardSlice.actions;
+
+export const { setFlashCard, removeCard } = flashcardSlice.actions;
 
 
 

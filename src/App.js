@@ -9,7 +9,6 @@ import FlashcardDetails from "./Pages/FlashcardDetails";
 import {BrowserRouter, Routes, Route} from "react-router-dom";
 import { useState } from "react";
 import { ToastContainer, toast } from 'react-toastify';
-import { Persist } from "formik-persist";
 
 import 'react-toastify/dist/ReactToastify.css';
 
