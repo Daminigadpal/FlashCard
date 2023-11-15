@@ -44,8 +44,7 @@ const MyFlashcard = () => {
                 src={user.cards[0].cardImage || Img }
                 alt="banner"
               />
-
-              <div className=" col-span-1   bg-white drop-shadow-lg border-gray-300 pb-5 px-4 h-56 2xl:h-72 justify-center rounded-bl-md rounded-br-md">
+          <div className=" col-span-1   bg-white drop-shadow-lg border-gray-300 pb-5 px-4 h-56 2xl:h-72 justify-center rounded-bl-md rounded-br-md">
                 {/* group image */}
                 <div>
                   <img
@@ -98,7 +97,7 @@ const MyFlashcard = () => {
             </div>
           ))}
         </div>
-      { userData.length > 3 ?
+      {userData.length > 3 ?
        visible > 4 ? <button onClick={HideItem} className="text-red-500 font-bold float-right mx-40 mb-11 2xl:mx-64 my-4">See Less</button>:
                <button onClick={showItem} className="text-red-500 font-bold float-right mx-40 mb-11 2xl:mx-64 my-4">See More</button>
       : null }

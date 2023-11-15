@@ -34,6 +34,4 @@ export const flashcardSlice = createSlice({
 
 export const { setFlashCard, removeCard } = flashcardSlice.actions;
 
-
-
 export default flashcardSlice.reducer;

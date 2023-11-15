@@ -24,6 +24,7 @@ const FlashcardDetails = () => {
   const openModal = () => setIsOpen(true);
   const [selectorCardIndex,setSelectorCardIndex]=useState(0);
 
+
   const handlePrint = useReactToPrint({
     content: () => printRef.current
   });
@@ -46,6 +47,8 @@ const FlashcardDetails = () => {
         </div>
     );
   };
+
+  
 
   
   const handleShare = () => {
@@ -71,7 +74,7 @@ const FlashcardDetails = () => {
     }
   };
 
-  return (
+return (
     <>
       <div className="mx-40 2xl:mx-64 2xl:text-xl">
         <div>
@@ -79,7 +82,6 @@ const FlashcardDetails = () => {
             <div className=" flex items-center mb-2 ">
             <Link to={"/Myflashcard"}>
             <AiOutlineArrowLeft className="text-rose-600 text-xl  2xl:text-2xl font-extrabold " /></Link>
-            
             <h1 className="font-bold text-lg 2xl:text-2xl 2xl:font-bold ml-6 leading-3 ">{user.groupname} </h1></div>
            <div> <p className="ml-11 leading-5 font-normal 2xl:text-xl text-slate-500 ">{user.groupdescription}</p></div>
           
@@ -144,6 +146,7 @@ const FlashcardDetails = () => {
       </div>
           <div className="w-60 2xl:w-72">
             <div>
+            <div>
             
               <button onClick={openModal} className="font-medium rounded-lg w-full drop-shadow-lg px-6 2xl:px-9 flex items-center py-2 2xl:py-3 bg-white"><AiOutlineShareAlt className="mr-5 text-xl 2xl:text-xl"/> Share</button>
              
@@ -157,7 +160,9 @@ const FlashcardDetails = () => {
           <ShareModal isOpen={isOpen} closeModal={closeModal} />
         </div>
       </div>
+      </div>
     </>
   );
 };
+
 export default FlashcardDetails;

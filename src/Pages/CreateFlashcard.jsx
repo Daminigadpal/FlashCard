@@ -135,8 +135,8 @@ const filePickerRef = useRef([]);
                
 
                 
-              </div> {values.groupImg && (                 
-               <img
+              </div> {values.groupImg && (
+                <img
                     src={values.groupImg}
                     alt="groupImg"
                     className="h-20 rounded-lg border-[1px] shadow-md object-contain z-10 relative top-9"/>)}
@@ -165,12 +165,10 @@ const filePickerRef = useRef([]);
 
           {/* card  */}
 
-          <div
-            className={` text-black drop-shadow-lg pt-8 bg-white border shadow-lg rounded-lg py-10 pl-10 mt-5 ${
+          <div className={` text-black drop-shadow-lg pt-8 bg-white border shadow-lg rounded-lg py-10 pl-10 mt-5 ${
               DisableCards ? "pointer-events-none, opacity-50" : ""
-            }`}
+            }`}>
 
-          >
             <FieldArray name="cards">
               {(arrayHelper) => {
                 const cards = values.cards;
@@ -239,8 +237,7 @@ const filePickerRef = useRef([]);
                                     alt="cardimg"
                                     className=" h-20 shadow-md mt-7 border-[1px] object-contain rounded-lg hover:opacity-50 "
                                     
-                                />
-                                                                      
+                                />                               
                                 </div>
                               ) : (
                                 <button
@@ -270,7 +267,9 @@ const filePickerRef = useRef([]);
                                   />
                                   <span>Select Image</span>
                                   
+                                  
                                 </button>
+                                
                                 
                               )}
                             </div> 
@@ -301,6 +300,7 @@ const filePickerRef = useRef([]);
                           </div>
                         ))
                       : null}
+
 
 
                     {/* add more button  */}
@@ -342,5 +342,4 @@ const filePickerRef = useRef([]);
     </Formik>
   );
 };
-
 export default CreateFlashCard;

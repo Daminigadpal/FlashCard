@@ -68,90 +68,90 @@ const ShareModal = ({isOpen, closeModal}) => {
       // };
    
     return (
-        <div className={`share-buttons ${isOpen ? 'modal-open' : ''}`}>
-         <Modal open={isOpen} onClickBackdrop={closeModal} dataTheme="light"
-         className={`background-overlay ${isOpen ? 'blur-background' : ''}`}>
-        
-           
-     
-      <Modal.Header className="font-bold">Share</Modal.Header>
-      <Modal.Body>
-        <div className="m-5 flex flex-col ">
-        <Button
-        size="sm"
-        shape="circle"
-        className="absolute right-2 top-2 bg-white border-none text-slate-700 text-2xl font-bold shadow-lg"
-       
-        onClick={() => {
-          setIsCopied(false);
-          closeModal();
-        }}
-      > 
-       
-        <IoMdClose
-            onClick={closeModal}
-            className="absolute text-slate-500 right-3 top-3 text-2xl cursor-pointer"
-          />
-          </Button>
-           
-  <div className="flex items-center space-x-3">
-            <p className="flex items-center flex-1 border-2 p-2 text-xs text-slate-500 border-slate-300 rounded-md border-dashed">
-              Link:
-              <span className="mx-2 font-semibold text-xs overflow-x-hidden text-black">
-                {url}
-              </span>
-            </p>
+      <div >
+      <div >
+        <Modal
+          open={isOpen}
+          onClickBackdrop={closeModal}
+          dataTheme="light"
+        >
+          <Modal.Header className="font-bold">Share</Modal.Header>
+          <Modal.Body>
+            <div className="m-5 flex flex-col ">
+              <Button
+                size="sm"
+                shape="circle"
+                className="absolute right-2 top-2 bg-white border-none text-slate-700 text-2xl font-bold shadow-lg"
+                onClick={() => {
+                  setIsCopied(false);
+                  closeModal();
+                }}
+              >
+                <IoMdClose
+                  onClick={closeModal}
+                  className="absolute text-slate-500 right-3 top-3 text-2xl cursor-pointer"
+                />
+              </Button>
 
-            <CopyToClipboard text={url} onCopy={() =>setIsCopied(true)}>
-              <TbCopy className="text-xl text-slate-500 scale-x-[-1] cursor-pointer" />
-            </CopyToClipboard>
+              <div className="flex items-center space-x-3">
+                <p className="flex items-center flex-1 border-2 p-2 text-xs text-slate-500 border-slate-300 rounded-md border-dashed">
+                  Link:
+                  <span className="mx-2 font-semibold text-xs overflow-x-hidden text-black">
+                    {url}
+                  </span>
+                </p>
 
-            <BsShare className="text-xl text-slate-500 cursor-pointer" />
-          </div>
-          <h2 className="p-2 h-5 ml-3 text-sm text-green-500 font-semibold">
-            {isCopied && "Link copied to clipboard"}
-          </h2>
-          <div className="mt-6 flex items-center space-x-10 justify-center">
-          <WhatsappShareButton url="https://web.whatsapp.com/">
-              <img
-                src={Whatsapp}
-                 alt="Whatsapp"
-                className="w-10 p-2 bg-slate-100 rounded-lg cursor-pointer"
-              />
-            </WhatsappShareButton>
-            <FacebookShareButton url="https://www.facebook.com/">
-              <img
-                 src={Facebook}
-                 alt="facebook"
-                className="w-10 p-2 bg-slate-100 rounded-lg cursor-pointer"
-              />
-            </FacebookShareButton>
-            <TwitterShareButton url="https://twitter.com/">
-              <img
-                 src={Twitter}
-                 alt="Twitter"
-                className="w-10 p-2 bg-slate-100 rounded-lg cursor-pointer"
-              />
-            </TwitterShareButton>
-            <LinkedinShareButton url="https://www.linkedin.com/">
-              <img
-                src={LinkedIn}
-                 alt="Linkedin"
-                className="w-10 p-2 bg-slate-100 rounded-lg cursor-pointer"
-              />
-            </LinkedinShareButton>
-          
-            <EmailShareButton url="https://gmail.com/">
-              <img
-                 src={Mail}
-                 alt="Mail"
-                className="w-10 p-2 bg-slate-100 rounded-lg cursor-pointer"
-              />
-            </EmailShareButton>
-          </div>
-        </div>
-      </Modal.Body>
-    </Modal>
+                <CopyToClipboard text={url} onCopy={() => setIsCopied(true)}>
+                  <TbCopy className="text-xl text-slate-500 scale-x-[-1] cursor-pointer" />
+                </CopyToClipboard>
+
+                <BsShare className="text-xl text-slate-500 cursor-pointer" />
+              </div>
+              <h2 className="p-2 h-5 ml-3 text-sm text-green-500 font-semibold">
+                {isCopied && "Link copied to clipboard"}
+              </h2>
+              <div className="mt-6 flex items-center space-x-10 justify-center">
+                <WhatsappShareButton url="https://web.whatsapp.com/">
+                  <img
+                    src={Whatsapp}
+                    alt="Whatsapp"
+                    className="w-10 p-2 bg-slate-100 rounded-lg cursor-pointer"
+                  />
+                </WhatsappShareButton>
+                <FacebookShareButton url="https://www.facebook.com/">
+                  <img
+                    src={Facebook}
+                    alt="facebook"
+                    className="w-10 p-2 bg-slate-100 rounded-lg cursor-pointer"
+                  />
+                </FacebookShareButton>
+                <TwitterShareButton url="https://twitter.com/">
+                  <img
+                    src={Twitter}
+                    alt="Twitter"
+                    className="w-10 p-2 bg-slate-100 rounded-lg cursor-pointer"
+                  />
+                </TwitterShareButton>
+                <LinkedinShareButton url="https://www.linkedin.com/">
+                  <img
+                    src={LinkedIn}
+                    alt="Linkedin"
+                    className="w-10 p-2 bg-slate-100 rounded-lg cursor-pointer"
+                  />
+                </LinkedinShareButton>
+
+                <EmailShareButton url="https://gmail.com/">
+                  <img
+                    src={Mail}
+                    alt="Mail"
+                    className="w-10 p-2 bg-slate-100 rounded-lg cursor-pointer"
+                  />
+                </EmailShareButton>
+              </div>
+            </div>
+          </Modal.Body>
+        </Modal>
+      </div>
       </div>
     );
    }
