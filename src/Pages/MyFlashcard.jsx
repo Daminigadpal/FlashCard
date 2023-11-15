@@ -1,14 +1,11 @@
-import React from "react";
+import React, {useState} from "react";
 import { Link } from "react-router-dom";
 import notImg from "../Assets/not-img.png";
-import { useLocation } from "react-router-dom";
-import wolfImg from "../Assets/wolf-img.jpg";
-import dogImg from "../Assets/dog-img.png";
-import Capture from "../Assets/capture.png";
 import Img from "../Assets/img.png";
-import profileImg from "../Assets/profileimg.png";
-
-const MAX_CHARACTERS = 70;
+import Capture from "../Assets/profileimg.svg";
+import { useDispatch,useSelector } from "react-redux";
+import { removeCard } from "../App/features/flashcardSlice";
+const MAX_CHARACTERS = 65;
 
 const truncateText = (text, maxLength) => {
   if (text.length > maxLength) {
@@ -17,28 +14,43 @@ const truncateText = (text, maxLength) => {
   return text;
 };
 
-const MyFlashcard = ({ userData, onRemove }) => {
-  // const location = useLocation();
-  // const flashcardData = location.state && location.state.flashcardData;
+const MyFlashcard = () => {
+ const userData = useSelector((state)=>(state.flashcards))
+  const dispatch = useDispatch();
 
+  const onRemove =(index) =>{
+    
+    dispatch(removeCard(index)) 
+  }
+
+  const [visible, setVisible]=useState(3);
+
+  const showItem =()=>{
+   setVisible((preVious) => preVious + 9)
+  }
+
+  const HideItem=() =>{
+    setVisible(3)
+   }
   return (
     <>
       {userData.length !== 0 ? (
-        <div className=" mx-40 2xl:mx-64 mb-6 grid grid-cols-3 gap-9">
-          {userData.map((user, index) => (
-            <div key={index} className="round-[1px] 2xl:text-xl">
+        <div>
+        <div className="m-1 md:mx-40 2xl:mx-64 mb-6 grid md:grid-cols-3 gap-9">
+          {userData.slice(0,visible).map((user, index) => (
+            <div key={user.id} className="round-[1px] 2xl:text-xl">
               <img
                 className="object-cover rounded-tl-md banner rounded-tr-md brightness-[100%] w-full  h-24 2xl:h-32"
                 src={user.cards[0].cardImage || Img }
                 alt="banner"
               />
 
-              <div className=" col-span-1   bg-white drop-shadow-lg border-gray-300 pb-5 px-4 h-60 2xl:h-72 justify-center rounded-bl-md rounded-br-md">
+              <div className=" col-span-1   bg-white drop-shadow-lg border-gray-300 pb-5 px-4 h-56 2xl:h-72 justify-center rounded-bl-md rounded-br-md">
                 {/* group image */}
                 <div>
                   <img
-                    className=" border-[3px] object-cover border-white relative m-auto -top-8 rounded-full w-[75px] h-[75px]"
-                    src={user.groupImg || profileImg}
+                    className=" border-[3px] object-cover border-white relative m-auto -top-10 rounded-full w-[75px] h-[75px]"
+                    src={user.groupImg || Capture}
                     alt="profile_img"
                   />
                 </div>
@@ -47,7 +59,7 @@ const MyFlashcard = ({ userData, onRemove }) => {
                   {/* group name */}
 
                   <div>
-                    <h1 className=" text-center -mt-6 text-black font-bold 2xl:text-xl 2xl:-mt-4  letter tracking-wider">
+                    <h1 className=" text-center -mt-8 text-black font-bold 2xl:text-xl 2xl:-mt-4  letter tracking-wider">
                       {user.groupname}
                     </h1>
                   </div>
@@ -75,7 +87,7 @@ const MyFlashcard = ({ userData, onRemove }) => {
                     </Link>
 
                     <button
-                      onClick={() => onRemove(index)}
+                      onClick={() => onRemove(user.id)}
                       className=" border-[1px] rounded-[4px] w-24 py-[2px] 2xl:w-28 border-red-200 shadow-lg hover:border-red-500 text-red-600 font-medium "
                     >
                       Remove
@@ -85,6 +97,11 @@ const MyFlashcard = ({ userData, onRemove }) => {
               </div>
             </div>
           ))}
+        </div>
+      { userData.length > 3 ?
+       visible > 4 ? <button onClick={HideItem} className="text-red-500 font-bold float-right mx-40 mb-11 2xl:mx-64 my-4">See Less</button>:
+               <button onClick={showItem} className="text-red-500 font-bold float-right mx-40 mb-11 2xl:mx-64 my-4">See More</button>
+      : null }
         </div>
       ) : (
         <div className="text-center">

@@ -7,6 +7,7 @@ import {
   ErrorMessage,
   FieldArray,
   setFieldValue,
+  useFormikContext
 } from "formik";
 import FlashCardSchema from "../Validations/schema/FlashcardSchema";
 import { nanoid } from "nanoid";
@@ -16,31 +17,20 @@ import {
   AiOutlineEdit,
   AiOutlineDelete,
   AiFillFileImage,
+  AiOutlineClose
 } from "react-icons/ai";
 import { useDispatch } from "react-redux";
-import { setFlashCard } from "../App/features/flashcardSlice";
 import TextError from "../Validations/customErrorForm/TextError";
-import { useNavigate } from "react-router-dom";
-import dogImg from "../Assets/dog-img.png"
-const LOCAL_STORAGE_KEY = "my-form";
+import { setFlashCard } from "../App/features/flashcardSlice";
 
 const CreateFlashCard = ({ onSubmit }) => {
+  
   const [DisableCards, setDisableCards] = useState(true);
-  const [wordCount, setWordCount] = useState(0);
-  const dispatch = useDispatch();
-  const filePickerRef = useRef(null);
-  // const editRef = useRef();
-  const filePicker = useRef(null);
-  // This function will save the form values to local storage
-  const saveForm = (values) => {
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(values));
-  };
+  const [showCloseButton, setShowCloseButton] = useState(false);
+const [removeImage, setRemoveImage] = useState(false);
 
-  // This function will load the form values from local storage
-  const loadForm = () => {
-    const savedValues = localStorage.getItem(LOCAL_STORAGE_KEY);
-    return savedValues ? JSON.parse(savedValues) : {};
-  };
+  const dispatch = useDispatch();
+  const filePicker = useRef(null);
 
   const handleEditButtonClick = (index) => {
     editRef.current[index].focus();
@@ -48,19 +38,17 @@ const CreateFlashCard = ({ onSubmit }) => {
 
   const editRef = useRef([]);
 
+  // Define a function to handle card image click
+const handleCardImageClick = (index, setFieldValue) => {
+  setFieldValue(`cards.${index}.cardImage`,null)
+}
 
-//   const handleCardDescriptionChange = (e, index) => {
-//   const newDescription = e.target.value;
-//   // Split the description into words (space-separated)
-//   const words = newDescription.trim().split(/\s+/);
-//   setWordCount(words.length);
+const filePickerRef = useRef([]);
 
-// };
-  
   return (
     <Formik
       initialValues={{
-        groupid: nanoid(),
+        id: nanoid(),
         groupname: "",
         groupdescription: "",
         groupImg: null,
@@ -76,17 +64,18 @@ const CreateFlashCard = ({ onSubmit }) => {
       }}
       validationSchema={FlashCardSchema}
       onSubmit={(values, { resetForm }) => {
-        onSubmit(values); // Pass the values to the parent component
+        // onSubmit(values); // Pass the values to the parent component
+        dispatch(setFlashCard(values));
         resetForm(); // Clear the form
         toast.success("👍 Flashcard Created !", {
           position: "top-center",
-          autoClose: 3000, // 3 seconds
+          autoClose: 2000, // 3 seconds
           hideProgressBar: false,
         });
         // saveForm(values);
       }}
     >
-      {({ values, isSubmitting, setFieldValue }) => (
+      {({ values, isSubmitting,setFieldValue }) => (
         <Form className="max-w-screen-2xl  mx-auto text-black-600 text-bold 2xl:text-xl font-medium px-4 lg:px-40 2xl:px-16">
           {/* Create group */}
           <div className="px-10 py-4 bg-white drop-shadow-lg rounded-lg">
@@ -177,9 +166,10 @@ const CreateFlashCard = ({ onSubmit }) => {
           {/* card  */}
 
           <div
-            className={` text-black drop-shadow-lg pt-8 bg-white border shadow-lg rounded-lg p-10 mt-5 ${
+            className={` text-black drop-shadow-lg pt-8 bg-white border shadow-lg rounded-lg py-10 pl-10 mt-5 ${
               DisableCards ? "pointer-events-none, opacity-50" : ""
             }`}
+
           >
             <FieldArray name="cards">
               {(arrayHelper) => {
@@ -188,16 +178,15 @@ const CreateFlashCard = ({ onSubmit }) => {
                   <div className="   flex flex-col w-full ">
                     {cards && cards.length > 0
                       ? cards.map((card, index) => (
-                          <div key={index} className="flex gap-6 pr-4 pb-4">
-                            <div className="w-2 h-2 px-3 py-3 flex items-center justify-center bg-red-600 text-white text-md font-semibold rounded-full">
+                          <div key={index} className="flex gap-6 pr-4">
+                            <div className="w-2 h-2 px-3 py-3 flex items-center justify-center bg-red-400 text-white text-md font-semibold rounded-full">
                               {index + 1}
                             </div>
                             {/* Enter term */}
                             <div className="">
                               <label
                                 htmlFor={`cards.${index}.cardname`}
-                                className=" text-gray-600 text-base block"
-                              >
+                                className=" text-gray-600 text-base block">
                                 Enter Term{" "}
                                 <span className="text-red-600">*</span>
                               </label>
@@ -228,9 +217,9 @@ const CreateFlashCard = ({ onSubmit }) => {
                               <Field
                                 as="textarea"
                                 id={`cards.${index}.carddescription`}
+                                value= {card.carddescription}
                                 name={`cards.${index}.carddescription`}
-                                // onChange={(e) => handleCardDescriptionChange(e, index)}
-                                className= " border-gray-200 mt-1 border-[1px] p-2 h-11 md:w-[350px] 2xl:w-[420px] rounded-lg bg-slate-50 resize-none"
+                                className= "mb-0  border-gray-200 mt-1 border-[1px] p-2 h-20 md:w-[350px] 2xl:w-[420px] rounded-lg bg-slate-50 resize-none"
                                 placeholder="This is description"
                                 disabled={DisableCards}
                               />
@@ -241,46 +230,29 @@ const CreateFlashCard = ({ onSubmit }) => {
                             </div>
 
                             {/* Upload card image  */}
-                            <div className="flex items-center">
+                            <div className="">
                               {card.cardImage ? (
                                 <div className="flex ">
+                                    <button className="absolute z-50 rounded-2xl ml-[4px] h-auto mt-8 border-red-600 border-2 text-xs text-red-700" onClick={() => handleCardImageClick(index,setFieldValue)}> <AiOutlineClose/> </button>
                                   <img
                                     src={card.cardImage}
                                     alt="cardimg"
-                                    className="h-20 shadow-md mt-7 border-[1px] object-contain rounded-lg"
-                                  />
-                                  <div className="  ml-9 space-y-3 mt-9">
-                                    <button
-                                      type="button"
-                                      onClick={() => 
-                                        
-                                        handleEditButtonClick(index)
-                                      }
-                                      className=" text-blue-500 block text-lg font-extrabold p-1"
-                                    >
-                                      <AiOutlineEdit/>
-                                    </button>
-
-                                    <button
-                                      type="button"
-                                      className=" text-red-500  text-lg  p-1"
-                                      onClick={() => arrayHelper.remove(index)}
-                                    >
-                                      <AiOutlineDelete />
-                                    </button>
-                                  </div>
+                                    className=" h-20 shadow-md mt-7 border-[1px] object-contain rounded-lg hover:opacity-50 "
+                                    
+                                />
+                                                                      
                                 </div>
                               ) : (
                                 <button
                                   type="button"
-                                  className=" md:flex items-center px-10 py-2 mt-5 border-[1px] border-blue-500 text-blue-600 
+                                  className=" md:flex items-center px-10 py-2 mt-7 border-[1px] border-blue-500 text-blue-600 
                             drop-shadow-lg font-semibold rounded-md"
-                                  onClick={() => filePickerRef.current.click()}
+                                  onClick={() => filePickerRef.current[index].click()}
                                   disabled={DisableCards}
                                 >
                                   <input
                                     type="file"
-                                    ref={filePickerRef}
+                                    ref={(ref) => (filePickerRef.current[index]= ref)}
                                     value={card.cardImage}
                                     onChange={(e) => {
                                       const file = e.target.files[0];
@@ -297,12 +269,39 @@ const CreateFlashCard = ({ onSubmit }) => {
                                     hidden
                                   />
                                   <span>Select Image</span>
+                                  
                                 </button>
+                                
                               )}
-                            </div>
+                            </div> 
+                            <div className="  ml-2 space-y-4 mt-9 2xl:ml-9">
+                                    <button
+                                    
+                                      type="button"
+                                      onClick={() => 
+                                        
+                                        handleEditButtonClick(index)
+                                      }
+                                      className=" text-blue-500 block text-lg font-extrabold p-1"
+                                      disabled={DisableCards}
+                                    >
+                                      <AiOutlineEdit/>
+                                    </button>
+
+                                    <button
+                                      type="button"
+                                      className=" text-red-500  text-lg  p-1"
+                                      onClick={() => arrayHelper.remove(index)}
+                                      disabled={DisableCards}
+                                    >
+                                      <AiOutlineDelete />
+                                    </button>
+                                  </div>
+                           
                           </div>
                         ))
                       : null}
+
 
                     {/* add more button  */}
                     <div className=" py-2">

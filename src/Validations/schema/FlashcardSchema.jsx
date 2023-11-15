@@ -5,11 +5,12 @@ const FlashCardSchema = Yup.object().shape({
   groupname: Yup.string()
     .max(20, "Must be less than 20 characters")
     .min(3, "Group Name Must be More Than 5 Characters")
-    .required("Please , Enter Group Name !"),
+    .required("Please, Enter Group Name!"),
   groupdescription: Yup.string().max(
     500,
     " Group Description must be less than 500 characters"
-  ),
+  )
+  .required("Please, Group Add Description!"),
 
   groupimg: Yup.mixed(),
 
@@ -17,13 +18,13 @@ const FlashCardSchema = Yup.object().shape({
     Yup.object().shape({
       cardid: Yup.string(),
       cardname: Yup.string()
-        .max(30, "Must be less than 20 characters")
-        .min(3, "Group Name Must be More Than 3 Characters")
-        .required(" Input Required !"),
+        .max(30, "Must be less than 30 characters")
+        .min(3, "Card Name Must be More Than 3 Characters")
+        .required("Please, Enter Card Name!"),
       carddescription: Yup.string()
-        .min(20, "Must be more than 20 characters")
-        .max(300, " Must be less than 300 characters")
-        .required(" Input Required !"),
+        .min(200, "Must be more than 200 characters")
+        .max(356, " Must be less than 300 characters")
+        .required(" Please, Enter Card Description!"),
         cardImg:Yup.string(),
     })
   ),
