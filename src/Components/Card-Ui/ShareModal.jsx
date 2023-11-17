@@ -2,17 +2,17 @@ import React, { useEffect, useState } from "react";
 import { Button, Modal } from "react-daisyui";
 import {
     FacebookShareButton,
-    FacebookIcon,
+    // FacebookIcon,
     LinkedinShareButton,
-    LinkedinIcon,
+    // LinkedinIcon,
     TelegramShareButton,
-    TelegramIcon,
+    // TelegramIcon,
     TwitterShareButton,
-    TwitterIcon,
+    // TwitterIcon,
     WhatsappShareButton,
-    WhatsappIcon,
+    // WhatsappIcon,
     EmailShareButton,
-    MailruIcon,
+    // MailruIcon,
   } from 'react-share';
   import { TbCopy } from "react-icons/tb";
   import { IoMdClose } from "react-icons/io";

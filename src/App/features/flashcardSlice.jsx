@@ -1,6 +1,6 @@
 //in initialstate we are taking the initial state of localstoragey
-import { createSlice, nanoid } from "@reduxjs/toolkit";
-import { stringify } from "postcss";
+import { createSlice } from "@reduxjs/toolkit";
+// import { stringify } from "postcss";
 
 /*here we  r using ternary to check flashcard in the local storage if the flashcard is present then we will parse them 
 or and take take them with the help of getItem() meathod else we will write empty array */ 

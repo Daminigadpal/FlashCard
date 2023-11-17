@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState } from "react";
 import { toast } from 'react-toastify';
 import {
   Formik,
@@ -6,8 +6,8 @@ import {
   Field,
   ErrorMessage,
   FieldArray,
-  setFieldValue,
-  useFormikContext
+  // setFieldValue,
+  // useFormikContext
 } from "formik";
 import FlashCardSchema from "../Validations/schema/FlashcardSchema";
 import { nanoid } from "nanoid";
@@ -26,8 +26,8 @@ import { setFlashCard } from "../App/features/flashcardSlice";
 const CreateFlashCard = ({ onSubmit }) => {
   
   const [DisableCards, setDisableCards] = useState(true);
-  const [showCloseButton, setShowCloseButton] = useState(false);
-const [removeImage, setRemoveImage] = useState(false);
+  // const [showCloseButton, setShowCloseButton] = useState(false);
+// const [removeImage, setRemoveImage] = useState(false);
 
   const dispatch = useDispatch();
   const filePicker = useRef(null);
@@ -78,7 +78,7 @@ const filePickerRef = useRef([]);
       {({ values, isSubmitting,setFieldValue }) => (
         <Form className="max-w-screen-2xl  mx-auto text-black-600 text-bold 2xl:text-xl font-medium px-4 lg:px-40 2xl:px-16">
           {/* Create group */}
-          <div className="px-10 py-4 bg-white drop-shadow-lg rounded-lg">
+          <div className="px-10 py-4  bg-white drop-shadow-lg rounded-lg">
             {/* Name Group */}
             <div className="flex items-end gap-7">
               <div className="flex flex-col ">
@@ -91,7 +91,7 @@ const filePickerRef = useRef([]);
                   name="groupname"
                   id="createGroup"
                   placeholder="Enter Group Name"
-                  className="border-gray-300 md:w-96 font-medium border-[1px] rounded-md p-2 bg-gray-50"
+                  className="border-gray-300  md:w-96 font-medium border-[1px] rounded-md p-2 bg-gray-50"
                   onBlur={(e) => {
                     // Enable the carddescription field when group description is filled
                     if (e.target.value) {
@@ -194,7 +194,7 @@ const filePickerRef = useRef([]);
                                 innerRef={(ref)=>editRef.current[index]=ref}
                                 name={`cards.${index}.cardname`}
                                 className="border-gray-200 mt-1 border-[1px] p-2 md:w-72 2xl:w-96 rounded-lg bg-gray-50"
-                                placeholder="javascript"
+                                placeholder="What is JavaScript?"
                                 disabled={DisableCards}
                               />
                               <ErrorMessage
@@ -328,11 +328,12 @@ const filePickerRef = useRef([]);
             </FieldArray>
           </div>
 
-          <div className="flex justify-center w-full my-8">
+          <div className="flex justify-center w-full my-8"
+          >
             <button
               disabled={isSubmitting}
               type="submit"
-              className="py-2 px-14 border-[1px]  border-red-500 hover:bg-red-500 shadow-md text-red-500 hover:text-white rounded-md"
+              className={`py-2 px-14 border-[1px]  border-red-500 hover:bg-red-500 shadow-md text-red-500 hover:text-white rounded-md ${DisableCards ? 'disabled-button' : ''}`}
             >
               Create
             </button>
