@@ -5,10 +5,17 @@ import { Button, Modal } from "react-daisyui";
 // Importing social media share buttons and icons from react-share
 import {
   FacebookShareButton,
+  FacebookIcon,
   LinkedinShareButton,
+  LinkedinIcon,
+  TelegramShareButton,
+  TelegramIcon,
   TwitterShareButton,
+  TwitterIcon,
   WhatsappShareButton,
+  WhatsappIcon,
   EmailShareButton,
+  MailruIcon,
 } from 'react-share';
 // Importing icons from various libraries
 import { TbCopy } from "react-icons/tb";

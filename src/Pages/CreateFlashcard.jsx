@@ -1,4 +1,5 @@
-import React, { useRef, useState, useEffect } from "react";
+// Importing necessary dependencies and components
+import React, { useRef, useState} from "react";
 import { toast } from 'react-toastify';
 import {
   Formik,
@@ -6,8 +7,6 @@ import {
   Field,
   ErrorMessage,
   FieldArray,
-  setFieldValue,
-  useFormikContext
 } from "formik";
 import FlashCardSchema from "../Validations/schema/FlashcardSchema";
 import { nanoid } from "nanoid";
@@ -16,35 +15,41 @@ import {
   AiOutlineUpload,
   AiOutlineEdit,
   AiOutlineDelete,
-  AiFillFileImage,
   AiOutlineClose
 } from "react-icons/ai";
 import { useDispatch } from "react-redux";
 import TextError from "../Validations/customErrorForm/TextError";
 import { setFlashCard } from "../App/features/flashcardSlice";
 
-const CreateFlashCard = ({ onSubmit }) => {
+// Functional component for creating flashcards
+const CreateFlashCard = () => {
   
+  // State to manage the disabling of cards
   const [DisableCards, setDisableCards] = useState(true);
-  const [showCloseButton, setShowCloseButton] = useState(false);
-const [removeImage, setRemoveImage] = useState(false);
 
+  // Redux dispatch hook
   const dispatch = useDispatch();
+
+  // Reference for file picker input
   const filePicker = useRef(null);
 
+  // Function to handle edit button click
   const handleEditButtonClick = (index) => {
     editRef.current[index].focus();
   }
 
+  // Ref for edit inputs
   const editRef = useRef([]);
 
-  // Define a function to handle card image click
-const handleCardImageClick = (index, setFieldValue) => {
-  setFieldValue(`cards.${index}.cardImage`,null)
-}
+  // Function to handle card image click
+  const handleCardImageClick = (index, setFieldValue) => {
+    setFieldValue(`cards.${index}.cardImage`, null);
+  }
 
-const filePickerRef = useRef([]);
+  // Refs for file pickers
+  const filePickerRef = useRef([]);
 
+  // Rendering the form using Formik
   return (
     <Formik
       initialValues={{
@@ -64,26 +69,27 @@ const filePickerRef = useRef([]);
       }}
       validationSchema={FlashCardSchema}
       onSubmit={(values, { resetForm }) => {
-        // onSubmit(values); // Pass the values to the parent component
+        // Dispatching an action to set flashcard data in Redux store
         dispatch(setFlashCard(values));
-        resetForm(); // Clear the form
+        // Resetting the form after submission
+        resetForm();
+        // Showing a success toast message
         toast.success("👍 Flashcard Created !", {
           position: "top-center",
-          autoClose: 2000, // 3 seconds
+          autoClose: 2000,
           hideProgressBar: false,
         });
-        // saveForm(values);
       }}
     >
-      {({ values, isSubmitting,setFieldValue }) => (
+      {({ values, isSubmitting, setFieldValue }) => (
         <Form className="max-w-screen-2xl  mx-auto text-black-600 text-bold 2xl:text-xl font-medium px-4 lg:px-40 2xl:px-16">
           {/* Create group */}
           <div className="px-10 py-4 bg-white drop-shadow-lg rounded-lg">
             {/* Name Group */}
-            <div className="flex items-end gap-7">
+            <div className="md:flex items-end gap-7">
               <div className="flex flex-col ">
-                <label htmlFor="createGroup" className="text-gray-600  py-2 mt-2"
-                >
+                {/* Group name input */}
+                <label htmlFor="createGroup" className="text-gray-600  py-2 mt-2">
                   Create Group <span className="text-red-700">*</span>
                 </label>
                 <Field
@@ -104,13 +110,12 @@ const filePickerRef = useRef([]);
                 <ErrorMessage component={TextError} name="groupname" />
               </div>
               
-              
               <div className="">
-               
+                  {/* Button to trigger file picker for group image */}
                   <button
                     type="button"
                     onClick={() => filePicker.current.click()}
-                    className="md:flex items-center px-5 py-2 mt-6 border-[1px] border-slate-300 text-blue-700 font-semibold rounded-md space-x-2 shadow-md"
+                    className="flex items-center px-5 py-2 mt-6 border-[1px] border-slate-300 text-blue-700 font-semibold rounded-md space-x-2 shadow-md"
                   >
                     <input
                       type="file"
@@ -118,6 +123,7 @@ const filePickerRef = useRef([]);
                       name="groupImg"
                       accept="image/*"
                       onChange={(e) => {
+                        // Read and set the group image when selected
                         const file = e.target.files[0];
                         const reader = new FileReader();
                         reader.readAsDataURL(file);
@@ -131,15 +137,14 @@ const filePickerRef = useRef([]);
                     <AiOutlineUpload className="w-5 h-5" />
                     {values.groupImg ? <span>Change Image</span> : <span>Upload Image</span>}
                   </button>
-                  
-               
-
-                
-              </div> {values.groupImg && (
+              </div> 
+              {values.groupImg && (
                 <img
-                    src={values.groupImg}
-                    alt="groupImg"
-                    className="h-20 rounded-lg border-[1px] shadow-md object-contain z-10 relative top-9"/>)}
+                  src={values.groupImg}
+                  alt="groupImg"
+                  className="h-20 rounded-lg border-[1px] shadow-md object-contain "
+                />
+              )}
             </div>
 
             {/* Add Description */}
@@ -150,6 +155,7 @@ const filePickerRef = useRef([]);
               >
                 Add Description <span className="text-red-700">*</span>
               </label>
+              {/* Group description input */}
               <Field
                 as="textarea"
                 name="groupdescription"
@@ -163,20 +169,17 @@ const filePickerRef = useRef([]);
             </div>
           </div>
 
-          {/* card  */}
-
-          <div className={` text-black drop-shadow-lg pt-8 bg-white border shadow-lg rounded-lg py-10 pl-10 mt-5 ${
-              DisableCards ? "pointer-events-none, opacity-50" : ""
-            }`}>
-
+          {/* Card section */}
+          <div className={`text-black drop-shadow-lg pt-8 bg-white border shadow-lg rounded-lg py-10 pl-10 mt-5 ${DisableCards ? "pointer-events-none, opacity-50" : ""}`}>
+            {/* FieldArray to handle the array of cards */}
             <FieldArray name="cards">
               {(arrayHelper) => {
                 const cards = values.cards;
                 return (
-                  <div className="   flex flex-col w-full ">
+                  <div className="flex flex-col w-full">
                     {cards && cards.length > 0
                       ? cards.map((card, index) => (
-                          <div key={index} className="flex gap-6 pr-4">
+                          <div key={index} className="md:flex 2xl:flex gap-6 pr-4 pt-4">
                             <div className="w-2 h-2 px-3 py-3 flex items-center justify-center bg-red-400 text-white text-md font-semibold rounded-full">
                               {index + 1}
                             </div>
@@ -184,14 +187,16 @@ const filePickerRef = useRef([]);
                             <div className="">
                               <label
                                 htmlFor={`cards.${index}.cardname`}
-                                className=" text-gray-600 text-base block">
+                                className=" text-gray-600 text-base block"
+                              >
                                 Enter Term{" "}
                                 <span className="text-red-600">*</span>
                               </label>
+                              {/* Card name input */}
                               <Field
                                 type="text"
                                 id={`cards.${index}.cardname`}
-                                innerRef={(ref)=>editRef.current[index]=ref}
+                                innerRef={(ref) => editRef.current[index] = ref}
                                 name={`cards.${index}.cardname`}
                                 className="border-gray-200 mt-1 border-[1px] p-2 md:w-72 2xl:w-96 rounded-lg bg-gray-50"
                                 placeholder="javascript"
@@ -203,7 +208,7 @@ const filePickerRef = useRef([]);
                               />
                             </div>
 
-                            {/* Enter Description  */}
+                            {/* Enter Description */}
                             <div>
                               <label
                                 htmlFor={`cards.${index}.carddescription`}
@@ -212,12 +217,13 @@ const filePickerRef = useRef([]);
                                 Enter Description{" "}
                                 <span className="text-red-600">*</span>
                               </label>
+                              {/* Card description textarea */}
                               <Field
                                 as="textarea"
                                 id={`cards.${index}.carddescription`}
-                                value= {card.carddescription}
+                                value={card.carddescription}
                                 name={`cards.${index}.carddescription`}
-                                className= "mb-0  border-gray-200 mt-1 border-[1px] p-2 h-20 md:w-[350px] 2xl:w-[420px] rounded-lg bg-slate-50 resize-none"
+                                className="mb-0  border-gray-200 mt-1 border-[1px] p-2 h-20 md:w-[350px] 2xl:w-[420px] rounded-lg bg-slate-50 resize-none"
                                 placeholder="This is description"
                                 disabled={DisableCards}
                               />
@@ -227,31 +233,33 @@ const filePickerRef = useRef([]);
                               />
                             </div>
 
-                            {/* Upload card image  */}
+                            {/* Upload card image */}
                             <div className="">
                               {card.cardImage ? (
-                                <div className="flex ">
-                                    <button className="absolute z-50 rounded-2xl ml-[4px] h-auto mt-8 border-red-600 border-2 text-xs text-red-700" onClick={() => handleCardImageClick(index,setFieldValue)}> <AiOutlineClose/> </button>
+                                <div className="flex">
+                                  {/* Button to remove card image */}
+                                  <button className="absolute z-50 rounded-2xl ml-[4px] h-auto mt-8 border-red-600 border-2 text-xs text-red-700" onClick={() => handleCardImageClick(index, setFieldValue)}> <AiOutlineClose/> </button>
+                                  {/* Display the selected card image */}
                                   <img
                                     src={card.cardImage}
                                     alt="cardimg"
-                                    className=" h-20 shadow-md mt-7 border-[1px] object-contain rounded-lg hover:opacity-50 "
-                                    
-                                />                               
+                                    className="h-20 shadow-md mt-7 border-[1px] object-contain rounded-lg hover:opacity-50"
+                                  />
                                 </div>
                               ) : (
                                 <button
                                   type="button"
-                                  className=" md:flex items-center px-10 py-2 mt-7 border-[1px] border-blue-500 text-blue-600 
+                                  className="md:flex items-center px-10 py-2 mt-7 border-[1px] border-blue-500 text-blue-600 
                             drop-shadow-lg font-semibold rounded-md"
                                   onClick={() => filePickerRef.current[index].click()}
                                   disabled={DisableCards}
                                 >
                                   <input
                                     type="file"
-                                    ref={(ref) => (filePickerRef.current[index]= ref)}
+                                    ref={(ref) => (filePickerRef.current[index] = ref)}
                                     value={card.cardImage}
                                     onChange={(e) => {
+                                      // Read and set the card image when selected
                                       const file = e.target.files[0];
                                       const reader = new FileReader();
                                       reader.readAsDataURL(file);
@@ -266,45 +274,36 @@ const filePickerRef = useRef([]);
                                     hidden
                                   />
                                   <span>Select Image</span>
-                                  
-                                  
                                 </button>
-                                
-                                
                               )}
-                            </div> 
-                            <div className="  ml-2 space-y-4 mt-9 2xl:ml-9">
-                                    <button
-                                    
-                                      type="button"
-                                      onClick={() => 
-                                        
-                                        handleEditButtonClick(index)
-                                      }
-                                      className=" text-blue-500 block text-lg font-extrabold p-1"
-                                      disabled={DisableCards}
-                                    >
-                                      <AiOutlineEdit/>
-                                    </button>
-
-                                    <button
-                                      type="button"
-                                      className=" text-red-500  text-lg  p-1"
-                                      onClick={() => arrayHelper.remove(index)}
-                                      disabled={DisableCards}
-                                    >
-                                      <AiOutlineDelete />
-                                    </button>
-                                  </div>
+                            </div>
+                            <div className="ml-2 space-y-4 mt-9 2xl:ml-9">
                            
+                              <button
+                                type="button"
+                                onClick={() => handleEditButtonClick(index)}
+                                className="text-blue-500 block text-lg font-extrabold p-1"
+                                disabled={DisableCards}
+                              >
+                                <AiOutlineEdit/>
+                              </button>
+
+
+                              <button
+                                type="button"
+                                className="text-red-500 text-lg p-1"
+                                onClick={() => arrayHelper.remove(index)}
+                                disabled={DisableCards}
+                              >
+                                <AiOutlineDelete />
+                              </button>
+                            </div>
                           </div>
                         ))
                       : null}
 
-
-
-                    {/* add more button  */}
-                    <div className=" py-2">
+                    {/* Button to add more cards */}
+                    <div className="py-2">
                       <button
                         type="button"
                         onClick={() =>
@@ -328,6 +327,7 @@ const filePickerRef = useRef([]);
             </FieldArray>
           </div>
 
+          {/* Submit button */}
           <div className="flex justify-center w-full my-8">
             <button
               disabled={isSubmitting}
@@ -342,4 +342,6 @@ const filePickerRef = useRef([]);
     </Formik>
   );
 };
+
+// Exporting the component
 export default CreateFlashCard;

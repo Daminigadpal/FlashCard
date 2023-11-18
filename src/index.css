@@ -6,4 +6,12 @@
 
 body{
     background-color: #e5e7eb;
+    
 }
+.share-parent{
+    /* margin: 0 auto; */
+    position: absolute;
+    top:50%;
+    left:50%;
+    
+  }

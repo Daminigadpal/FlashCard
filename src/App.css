@@ -36,25 +36,25 @@
     transform: rotate(360deg);
   }
 } */
-.modal-open{
+
+/* .modal-open{
+  background-color: rgb(194, 231, 173);
+  
+} */
+/* .background-overlay {
+  /* Styles for the overlay that covers the background */ 
   /* background-color: rgb(194, 231, 173); */
-}
-.background-overlay {
-  /* Styles for the overlay that covers the background */
-  position: relative;
-  /* margin: auto; */
-  justify-content: center;
-  justify-items: center;
+ 
   /* top: 0;
   left: 0;
   width: 500px;
-  height: 200px; */
-  /* z-index: 999;  */
-}
-
+  height: 200px;
+  z-index: -99;  */
+/* } */ 
+/* 
 .blur-background {
   /* Styles for blurring the background when the modal is open (isOpen is true) */
-  backdrop-filter: blur;
-  /* background-color: rgba(214, 41, 41, 0.5);  */
+  /* backdrop-filter: blur;
+  background-color: rgba(214, 41, 41, 0.5);  */
   /* Add more styles for the blur effect */
-}
+/* } */
