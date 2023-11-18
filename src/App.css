@@ -36,9 +36,21 @@
     transform: rotate(360deg);
   }
 } */
-.modal-open{
-  /* background-color: rgb(194, 231, 173); */
+
+/* Add this to your CSS file or style block */
+.disabled-button {
+  opacity: 0.5; /* You can adjust the opacity as needed */
+  cursor: not-allowed;
+  /* Add any other styles you want for the disabled button */
 }
+
+.active-list-item {
+  color: red;
+}
+
+/* .modal-open{
+  /* background-color: rgb(194, 231, 173); */
+/* } */
 .background-overlay {
   /* Styles for the overlay that covers the background */
   position: relative;

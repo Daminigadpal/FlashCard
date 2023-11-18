@@ -1,4 +1,4 @@
-import React, {useState,useRef,useEffect} from "react";
+import React, {useState,useRef} from "react";
 import { Link, useParams } from "react-router-dom";
 import { useReactToPrint } from "react-to-print";
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
@@ -23,6 +23,8 @@ const FlashcardDetails = () => {
   const closeModal = () => setIsOpen(false);
   const openModal = () => setIsOpen(true);
   const [selectorCardIndex,setSelectorCardIndex]=useState(0);
+  const [activeListItemIndex, setActiveListItemIndex] = useState(0);
+
 
 
   const handlePrint = useReactToPrint({
@@ -31,6 +33,7 @@ const FlashcardDetails = () => {
   const handelCardClick =(index)=>{
     setSelectorCardIndex(index);
     setActiveIndex(index);
+    setActiveListItemIndex(index);
     
   };
 
@@ -51,12 +54,12 @@ const FlashcardDetails = () => {
   
 
   
-  const handleShare = () => {
-    setIsOpen (true);
-    const handleCloseShare = () => {
-      setShare("none");
-  };
-  };
+  // const handleShare = () => {
+  //   setIsOpen (true);
+  //   const handleCloseShare = () => {
+  //     setShare("none");
+  // };
+  // };
 
   const downloadPDF = ()=>{
     handleDownload(pdfRef);
@@ -65,12 +68,14 @@ const FlashcardDetails = () => {
   const goToPreviousSlide = () => {
     if (activeIndex > 0) {
       setActiveIndex(activeIndex - 1);
+      setActiveListItemIndex(activeIndex - 1);
     }
   };
 
   const goToNextSlide = () => {
     if (activeIndex < user.cards.length - 1) {
       setActiveIndex(activeIndex + 1);
+      setActiveListItemIndex(activeIndex + 1);
     }
   };
 
@@ -93,11 +98,14 @@ return (
             </div>
                 <hr className=""/>
             <div className="mt-5">
-            {user.cards.map((card,index)=>( 
-              <ul key={index} className=" mt-2  font-medium ">
-                <li className={index === selectorCardIndex ? " text-red-500 mb-1" : "text-black mb-1 font-normal"} onClick ={()=> handelCardClick(index)} ><button>{card.cardname}</button></li>
-              </ul>
-             ) )}
+            {user.cards.map((card, index) => (
+  <ul key={index} className={`mt-2 font-medium ${index === activeListItemIndex ? 'active-list-item' : ''}`}>
+    <li onClick={() => handelCardClick(index)}>
+      <button>{card.cardname}</button>
+    </li>
+  </ul>
+))}
+
             </div>
           </div>
           <div>
@@ -151,7 +159,7 @@ return (
               <button onClick={openModal} className="font-medium rounded-lg w-full drop-shadow-lg px-6 2xl:px-9 flex items-center py-2 2xl:py-3 bg-white"><AiOutlineShareAlt className="mr-5 text-xl 2xl:text-xl"/> Share</button>
              
               </div>
-              
+              {/* When a user clicks on the download button/print button, the pdf of the flash card with all terms and their data can be generated and saved to his computer */}
               <button onClick={downloadPDF} className="font-medium rounded-lg w-full drop-shadow-lg 2xl:py-3 2xl:px-9 px-6 my-4 flex items-center py-2 bg-white"><AiOutlineDownload className="mr-5 text-xl 2xl:text-2xl" /> Download</button>
             
               <button onClick={handlePrint} className="font-medium rounded-lg w-full drop-shadow-lg px-6 2xl:py-3 2xl:px-9 my-4 flex items-center py-2 bg-white"><AiFillPrinter className="mr-5 text-xl 2xl:text-2xl" /> Print</button>
