@@ -34,6 +34,7 @@ const FlashcardDetails = () => {
   // Function to open the modal
   const openModal = () => setIsOpen(true);
 
+
   // State variable to keep track of the selected card index
   const [selectorCardIndex, setSelectorCardIndex] = useState(0);
 
@@ -46,6 +47,7 @@ const FlashcardDetails = () => {
   const handelCardClick = (index) => {
     setSelectorCardIndex(index);
     setActiveIndex(index);
+    
   };
 
   // If flashcard data is not available, display a message to create a flashcard
@@ -73,6 +75,8 @@ const FlashcardDetails = () => {
   const goToPreviousSlide = () => {
     if (activeIndex > 0) {
       setActiveIndex(activeIndex - 1);
+      
+      setSelectorCardIndex(activeIndex - 1);
     }
   };
 
@@ -80,13 +84,15 @@ const FlashcardDetails = () => {
   const goToNextSlide = () => {
     if (activeIndex < user.cards.length - 1) {
       setActiveIndex(activeIndex + 1);
+      
+      setSelectorCardIndex(activeIndex + 1);
     }
   };
 
   // JSX code for rendering flashcard details
   return (
     <>
-      <div className={`share-buttons ${isOpen ? 'bg-black absolute z-50' : ""}`}>
+      <div className={`share-buttons ${isOpen ? '' : ""}`}>
         <div className="ml-8 md:mx-40 2xl:mx-64 2xl:text-xl">
           <div className="mr-8">
 

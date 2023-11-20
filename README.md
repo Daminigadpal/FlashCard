@@ -1,70 +1,105 @@
-# Getting Started with Create React App
+<h1 align="center"> 
+FLASHCARD GENERATOR
+</h1>
+<p align="center">React.js application to create flashcards.</p>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+<h2 align='center'>
+<a href='https://get-youtube-subscribers-eight.vercel.app/' target="_blank">DEMO</a>
+</h2>
 
-In the project directory, you can run:
+## Table of Contents
 
-### `npm start`
+- [Introduction ](#introduction)
+- [Features ](#features)
+- [Tech Stack ](#tech-stack)
+- [Prerequisites ](#prerequisites)
+- [Installation & Run](#installation-and-run)
+- [API Reference ](#api-reference)
+- [Contribute ](#contribute)
+- [Contributors ](#contributors)
+- [License ](#license)
+- [Contact ](#contact)
+- [Acknowledgments ](#acknowledgments)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Introduction
+Flashcard Generator is a powerful study tool developed with React that allows users to create, manage, and study flashcards effortlessly. This application provides a comprehensive solution for organizing and reviewing information in an intuitive and user-friendly manner.
 
-### `npm test`
+![Flashcard Generator](https://github.com/Abhi1o/Flash1/assets/87490161/7e4f4776-cd79-4577-bb26-2ef06b30fa0a)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Features
+Some features of this application :
+- **Create Flashcard:** Users can easily create new flashcards by filling out a simple form. The main flashcard form includes fields for the flashcard title, and a description. The term form allows users to add multiple terms to the flashcard, with fields for the term title and definition. Additional terms can be dynamically added or removed as needed.
 
-### `npm run build`
+- **My Flashcards:** This page provides an overview of all the flashcards created by the user. Each flashcard is displayed with its title and description, allowing for quick navigation to the desired flashcard.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- **Flashcard Details:** Users can view the details of a specific flashcard on this page. The flashcard's title and description are shown at the top, while the list of terms is displayed on the left side. Clicking on a term will display its details prominently in the center. Users can navigate between terms using an intuitive carousel with arrows at the bottom.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- **Share Flashcards:** Users have the option to share their flashcards by clicking on the share button. This opens a modal containing a unique link to the flashcard, along with a copy button for easy sharing with others.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- allowing users to access their study materials offline. This feature provides added convenience and flexibility for studying on the go.
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Tech Stack
+Flashcard Generator is build using the following technologies:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- **React.js:** React is a JavaScript library for building user interfaces.
+- **Tailwind CSS:** A utility-first CSS framework for rapidly building custom user interfaces. 
+- **Redux:** Redux is a predictable state container for JavaScript apps.
+- **Formik:**  A popular open-source library for building and processing form data in React applications.
+- **Yup:**  A JavaScript object schema validator.
+- **React-icons:** Library for including popular icon sets as React components.
+- **React-router-dom:** A package contains bindings for using React Router in web applications.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
+## Installation and Run
+1. Clone the repository from GitHub:
+    ```
+     git clone https://github.com/Abhi1o/Flash1
+    ```
+2. Redirect to the project folder:
+    ```
+     cd Flashcard
+    ```
+3. Install the required dependencies:
+    ```
+     npm install
+    ```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+4. Start server:
+    ```
+     npm start
+    ```
+    > [!NOTE]
+    > Access the  application in your web browser at `http://localhost:3000` (base URL)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
 
-### Code Splitting
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Contribute
+Contributions are welcome! If you'd like to contribute, please follow our [Contribution Guidelines](CONTRIBUTING.md).
 
-### Analyzing the Bundle Size
+## Contributors
+- Abhishek Kumar [GitHub](https://github.com/abhi1o) | [LinkedIn](https://linkedin.com/in/abhi--) | [YouTube](https://www.youtube.com/watch?v=1SHSj539rQg)
+- Aman Giri [GitHub](https://github.com/amangiri7) | [LinkedIn](https://www.linkedin.com/in/aman-giri-6b3a3b284/) | [YouTube](https://www.youtube.com/watch?v=Ur-M8QxRqQ8)
+- Damini Gadpal [GitHub](https://github.com/Daminigadpal) | [LinkedIn](https://www.linkedin.com/in/damini-gadpal-01996716b) | [YouTube](https://youtu.be/tzykJmtIHvg)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## License
+This project is Distributed under the ISC License. See [LICENSE](./LICENSE) for more information.
 
-### Making a Progressive Web App
+## Contact
+If you have any questions or suggestions, feel free to reach out to us at [Gmail](https://mail.google.com/mail/u/0/#inbox?compose=GTvVlcSGLPhhCThjSQBxqqKCTksFHbgmPZGmrTXlskrtrXBgHxRqbmdRdzJJlNBtvTWsTLmjdVLbb).
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## Acknowledgment
+We'd like to thank the contributors to this project for their valuable contributions.
 
-### Advanced Configuration
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## Happy Learning
 
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+<p align="center">
+<a href="https://github.com/Abhi1o/get_youtube_subscribers" title="GET youtube subscriber projects">
+<img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white">
+    
+</a>
+</p>

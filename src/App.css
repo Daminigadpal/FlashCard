@@ -37,24 +37,36 @@
   }
 } */
 
+/* Add this to your CSS file or style block */
+.disabled-button {
+  opacity: 0.5; /* You can adjust the opacity as needed */
+  cursor: not-allowed;
+  /* Add any other styles you want for the disabled button */
+}
+
+.active-list-item {
+  color: red;
+}
+
 /* .modal-open{
-  background-color: rgb(194, 231, 173);
-  
-} */
-/* .background-overlay {
-  /* Styles for the overlay that covers the background */ 
   /* background-color: rgb(194, 231, 173); */
- 
-  /* top: 0;
+/* } */
+.background-overlay {
+  /* Styles for the overlay that covers the background */
+  position: relative;
+  /* margin: auto; */
+  justify-content: center;
+  justify-items: center;
+   top: 0;
   left: 0;
   width: 500px;
   height: 200px;
-  z-index: -99;  */
-/* } */ 
-/* 
+  z-index: -99;  
+}  
+ /*
 .blur-background {
-  /* Styles for blurring the background when the modal is open (isOpen is true) */
-  /* backdrop-filter: blur;
-  background-color: rgba(214, 41, 41, 0.5);  */
-  /* Add more styles for the blur effect */
-/* } */
+   Styles for blurring the background when the modal is open (isOpen is true) 
+   backdrop-filter: blur;
+  background-color: rgba(214, 41, 41, 0.5);  
+   Add more styles for the blur effect 
+ } */

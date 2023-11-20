@@ -44,7 +44,7 @@ const ShareModal = ({isOpen, closeModal}) => {
       // Wrapping div for the modal
       <div>
       
-      <div className={`share-buttons ${isOpen ? 'modal-open' : ''}`}>
+      <div className={`share-buttons ${isOpen ? '' : ''}`}>
         {/* Modal component for sharing */}
         <Modal
           open={isOpen}
