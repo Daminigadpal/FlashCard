@@ -10,6 +10,9 @@ import { AiOutlineShareAlt, AiFillPrinter, AiOutlineArrowLeft, AiOutlineDownload
 // import downloadPDF from "../Components/downloadPDF";
 import ShareModal from "../Components/Card-Ui/ShareModal";
 import { useSelector } from "react-redux/es/hooks/useSelector";
+// import jsPDF from 'jspdf';
+import PdfContent from "../Components/Card-Ui/pdfContent";
+import {pdf} from '@react-pdf/renderer'
 
 // Functional component for displaying flashcard details
 const FlashcardDetails = () => {
@@ -40,9 +43,8 @@ const FlashcardDetails = () => {
 
   // React-to-print hook for handling printing
   const handlePrint = useReactToPrint({
-    content: () => printRef.current
+    content: () => printRef.current, 
   });
-
   // Function to handle card click
   const handelCardClick = (index) => {
     setSelectorCardIndex(index);
@@ -67,9 +69,18 @@ const FlashcardDetails = () => {
 
 
   // Function to download PDF
-  const downloadPDF = async (pdfRef) => {
-    downloadPDF(pdfRef, user.cards);
+ const downloadPDF = async () => {
+    const blob = await pdf(<PdfContent flashcards={user} flashcardId={activeIndex} />).toBlob();
+    const blobUrl = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.href = blobUrl;
+    link.download = "flashcard.pdf";
+    link.click();
+
+    URL.revokeObjectURL(blobUrl);
   };
+
 
   // Function to navigate to the previous card
   const goToPreviousSlide = () => {
@@ -118,8 +129,8 @@ const FlashcardDetails = () => {
               </div>
             </div>
             <div>
-              <div ref={printRef}>
-                <div className="prinablediv bg-white drop-shadow-lg  py-9 md:w-[600px] 2xl:w-[775px] mr-7 px-4  rounded-md" ref={pdfRef}>
+              <div ref={pdfRef}>
+                <div className="prinablediv bg-white drop-shadow-lg  py-9 md:w-[600px] 2xl:w-[775px] mr-7 px-4  rounded-md" ref={printRef}>
                   <Carousel
 
                     showArrows={false}

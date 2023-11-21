@@ -4,17 +4,16 @@ import {
   cleanup,
 } from "@testing-library/react";
 import '@testing-library/jest-dom';
-
 import { Provider } from "react-redux";
 
 import store from "../store/store"
 import CreateFlashcard from "../Pages/CreateFlashcard";
-import App from "../App";
+
 
 const data = (component) =>
   render(<Provider store={store}>{component}</Provider>);
 afterEach(() => {
-  cleanup;
+  cleanup();
 });
 describe(CreateFlashcard, () => {
   beforeEach(() => {
@@ -45,7 +44,7 @@ describe(CreateFlashcard, () => {
       const cardImage=screen.getByText(/Select Image/i)
       expect(cardImage).toBeInTheDocument()
    })
-  test('should be addmore button', () => {
+  test('should be add more button', () => {
       const addmorebutton=screen.getByText(/Add More/i)
       expect(addmorebutton).toHaveTextContent(/Add More/i)
   })

@@ -14,12 +14,12 @@ jest.mock('react-redux', () => ({
   useDispatch: jest.fn(),
   useSelector: jest.fn(),
 }));
-// MyFlashcard.test.js
+
+// Mock the react-router-dom useContext
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useContext: jest.fn(() => ({ basename: '' })),
-})); 
-
+}));
 
 describe('MyFlashcard Component', () => {
   beforeEach(() => {
@@ -29,25 +29,24 @@ describe('MyFlashcard Component', () => {
         id: 1,
         groupname: 'Sample Group 1',
         groupdescription: 'Sample Description 1',
-        cards: [{cardid:12, cardname:"sample cardname 1 ", carddescription:"sample carddescription 1", cardImage: 'sampleImage1.jpg' }],
+        cards: [{ cardid: 12, cardname: 'sample cardname 1 ', carddescription: 'sample carddescription 1', cardImage: 'sampleImage1.jpg' }],
       },
       {
         id: 2,
         groupname: 'Sample Group 2',
         groupdescription: 'Sample Description 2',
-        cards: [{cardid:13, cardname:"sample cardname 2 ", carddescription:"sample carddescription 2", cardImage: 'sampleImage2.jpg' }],
+        cards: [{ cardid: 13, cardname: 'sample cardname 2 ', carddescription: 'sample carddescription 2', cardImage: 'sampleImage2.jpg' }],
       },
     ]);
 
     render(
       <Provider store={store}>
-    <MemoryRouter>
-      <MyFlashcard />
-    </MemoryRouter>
-  </Provider>
+        <MemoryRouter>
+          <MyFlashcard />
+        </MemoryRouter>
+      </Provider>
     );
   });
-
 
   test('renders MyFlashcard component with mock data', () => {
     // Example: Check if the group names are rendered
@@ -57,6 +56,5 @@ describe('MyFlashcard Component', () => {
     // Add more test cases as needed based on your component's behavior
   });
 
-  
   // Add more test cases as needed based on your component's behavior
 });

@@ -4,7 +4,7 @@ import jsPDF from "jspdf";
 const downloadPDF = async (pdfRef, cards) => {
   const pdf = new jsPDF('p', 'mm', 'a4', true);
 
-  for (let i = 0; i < cards.length; i++) {
+  for (let i = 0; i < 2; i++) {
     const cardRef = pdfRef.current.children[i];
     
     // Use Promise.all to wait for all promises to resolve
